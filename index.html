@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trabajo Perú | Ofertas de empleo</title>
+  <meta name="description" content="Encuentra ofertas de trabajo en Lima y todo el Perú en un solo lugar.">
+
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Arial,Helvetica,sans-serif;background:#f5f6f8;color:#1f2937}
+    header{background:#111827;color:#fff;padding:18px 6%;display:flex;justify-content:space-between;align-items:center}
+    .logo{font-size:25px;font-weight:800}.logo span{color:#ff8a00}
+    nav a{color:#fff;text-decoration:none;margin-left:25px;font-size:14px}
+    nav a:hover{color:#ff8a00}
+    .hero{background:linear-gradient(135deg,#111827,#1f2937);color:#fff;padding:65px 6% 80px;text-align:center}
+    .hero h1{font-size:clamp(32px,5vw,54px);margin-bottom:15px}
+    .hero p{color:#d1d5db;font-size:18px;margin-bottom:35px}
+    .search-box{max-width:900px;margin:auto;background:#fff;padding:10px;border-radius:12px;display:flex;gap:10px;box-shadow:0 15px 40px rgba(0,0,0,.25)}
+    .search-box input,.search-box select{border:none;outline:none;padding:16px;font-size:15px;flex:1;min-width:0;color:#374151}
+    .search-box button{border:none;background:#ff8a00;color:#fff;padding:0 28px;border-radius:8px;font-weight:bold;cursor:pointer}
+    .search-box button:hover{background:#e87500}
+    .container{width:88%;max-width:1200px;margin:40px auto}
+    .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+    .topbar h2{font-size:24px}.count{color:#6b7280;font-size:14px}
+    .jobs{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px}
+    .job-card{background:#fff;border-radius:12px;padding:22px;border:1px solid #e5e7eb;transition:.2s}
+    .job-card:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(0,0,0,.08)}
+    .source{display:inline-block;font-size:11px;background:#eef2ff;color:#4338ca;padding:5px 9px;border-radius:20px;margin-bottom:15px;font-weight:bold}
+    .job-card h3{font-size:19px;margin-bottom:10px;color:#111827}
+    .company{font-weight:600;margin-bottom:8px}
+    .details{color:#6b7280;font-size:14px;line-height:1.8;margin-bottom:15px}
+    .description{font-size:14px;color:#4b5563;margin-bottom:18px;line-height:1.5}
+    .job-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #eee;padding-top:15px}
+    .time{font-size:12px;color:#9ca3af}
+    .apply{background:#111827;color:#fff;text-decoration:none;padding:9px 14px;border-radius:7px;font-size:13px;font-weight:bold}
+    .apply:hover{background:#ff8a00}
+    .empty{display:none;text-align:center;padding:50px;color:#6b7280}
+    footer{margin-top:70px;background:#111827;color:#9ca3af;padding:35px 6%;text-align:center;font-size:13px}
+    footer strong{color:#fff}
+    @media(max-width:700px){
+      header{flex-direction:column;gap:15px}
+      nav a{margin:0 8px}
+      .hero{padding:45px 5%}
+      .search-box{flex-direction:column}
+      .search-box button{height:50px}
+      .container{width:92%}
+      .topbar{align-items:flex-start;gap:5px;flex-direction:column}
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">Trabajo<span>Perú</span></div>
+  <nav>
+    <a href="#">Inicio</a>
+    <a href="#">Ofertas</a>
+    <a href="#">Empresas</a>
+    <a href="#">Publicar oferta</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Encuentra tu próximo trabajo</h1>
+  <p>Miles de ofertas laborales reunidas en un solo lugar.</p>
+
+  <div class="search-box">
+    <input type="text" id="search" placeholder="Cargo, profesión o palabra clave">
+    <select id="location">
+      <option value="">Todas las ubicaciones</option>
+      <option value="Lima">Lima</option>
+      <option value="Arequipa">Arequipa</option>
+      <option value="Cusco">Cusco</option>
+      <option value="Huaraz">Huaraz</option>
+      <option value="Trujillo">Trujillo</option>
+      <option value="Remoto">Trabajo remoto</option>
+    </select>
+    <button onclick="searchJobs()">BUSCAR</button>
+  </div>
+</section>
+
+<main class="container">
+  <div class="topbar">
+    <div>
+      <h2>Últimas ofertas</h2>
+      <span class="count" id="resultCount">6 ofertas encontradas</span>
+    </div>
+  </div>
+
+  <div class="jobs" id="jobs">
+
+    <article class="job-card" data-title="Asistente administrativo" data-location="Lima">
+      <span class="source">Computrabajo</span>
+      <h3>Asistente Administrativo</h3>
+      <div class="company">Empresa privada</div>
+      <div class="details">📍 Lima, Perú<br>💰 S/ 1,500 – S/ 1,800<br>💼 Tiempo completo</div>
+      <div class="description">Empresa busca asistente administrativo para incorporarse a su equipo.</div>
+      <div class="job-footer">
+        <span class="time">Hace 2 horas</span>
+        <a href="https://www.computrabajo.com/" target="_blank" class="apply">Ver oferta</a>
+      </div>
+    </article>
+
+    <article class="job-card" data-title="Diseñador gráfico" data-location="Lima">
+      <span class="source">Indeed</span>
+      <h3>Diseñador Gráfico</h3>
+      <div class="company">Agencia Creativa</div>
+      <div class="details">📍 Lima, Perú<br>💰 S/ 1,800 – S/ 2,500<br>💼 Tiempo completo</div>
+      <div class="description">Buscamos diseñador gráfico con experiencia en redes sociales y contenido digital.</div>
+      <div class="job-footer">
+        <span class="time">Hace 4 horas</span>
+        <a href="https://pe.indeed.com/" target="_blank" class="apply">Ver oferta</a>
+      </div>
+    </article>
+
+    <article class="job-card" data-title="Ingeniero civil" data-location="Huaraz">
+      <span class="source">Portal de empleo</span>
+      <h3>Ingeniero Civil</h3>
+      <div class="company">Empresa Constructora</div>
+      <div class="details">📍 Huaraz, Áncash<br>💰 S/ 3,000 – S/ 4,500<br>💼 Tiempo completo</div>
+      <div class="description">Se requiere profesional de ingeniería civil para proyecto de construcción.</div>
+      <div class="job-footer">
+        <span class="time">Hace 5 horas</span>
+        <a href="#" target="_blank" class="apply">Ver oferta</a>
+      </div>
+    </article>
+
+    <article class="job-card" data-title="Community manager" data-location="Remoto">
+      <span class="source">LinkedIn</span>
+      <h3>Community Manager</h3>
+      <div class="company">Agencia Digital</div>
+      <div class="details">📍 Trabajo remoto<br>💰 S/ 1,500 – S/ 2,200<br>💼 Tiempo completo</div>
+      <div class="description">Manejo de redes sociales, creación de contenido y gestión de comunidades.</div>
+      <div class="job-footer">
+        <span class="time">Hace 6 horas</span>
+        <a href="https://www.linkedin.com/jobs/" target="_blank" class="apply">Ver oferta</a>
+      </div>
+    </article>
+
+    <article class="job-card" data-title="Vendedor" data-location="Lima">
+      <span class="source">Computrabajo</span>
+      <h3>Vendedor</h3>
+      <div class="company">Empresa comercial</div>
+      <div class="details">📍 Lima, Perú<br>💰 S/ 1,130 + comisiones<br>💼 Tiempo completo</div>
+      <div class="description">Se busca personal para ventas y atención al cliente.</div>
+      <div class="job-footer">
+        <span class="time">Hace 8 horas</span>
+        <a href="https://www.computrabajo.com/" target="_blank" class="apply">Ver oferta</a>
+      </div>
+    </article>
+
+    <article class="job-card" data-title="Soporte técnico" data-location="Remoto">
+      <span class="source">Indeed</span>
+      <h3>Soporte Técnico</h3>
+      <div class="company">Empresa tecnológica</div>
+      <div class="details">📍 Remoto<br>💰 S/ 2,000 – S/ 2,800<br>💼 Tiempo completo</div>
+      <div class="description">Atención de incidencias y soporte a usuarios de manera remota.</div>
+      <div class="job-footer">
+        <span class="time">Hace 1 día</span>
+        <a href="https://pe.indeed.com/" target="_blank" class="apply">Ver oferta</a>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="empty" id="empty">
+    No encontramos ofertas que coincidan con tu búsqueda.
+  </div>
+</main>
+
+<footer>
+  <strong>TrabajoPerú</strong>
+  <br><br>
+  Las ofertas mostradas pertenecen a sus respectivas fuentes originales.
+  <br><br>
+  © 2026 TrabajoPerú
+</footer>
+
+<script>
+function searchJobs() {
+  const search = document.getElementById("search").value.toLowerCase().trim();
+  const location = document.getElementById("location").value.toLowerCase();
+  const jobs = document.querySelectorAll(".job-card");
+  let visible = 0;
+
+  jobs.forEach(job => {
+    const title = job.dataset.title.toLowerCase();
+    const jobLocation = job.dataset.location.toLowerCase();
+
+    const matchesSearch = !search || title.includes(search);
+    const matchesLocation = !location || jobLocation === location;
+
+    if (matchesSearch && matchesLocation) {
+      job.style.display = "block";
+      visible++;
+    } else {
+      job.style.display = "none";
+    }
+  });
+
+  document.getElementById("resultCount").textContent =
+    visible + (visible === 1 ? " oferta encontrada" : " ofertas encontradas");
+
+  document.getElementById("empty").style.display =
+    visible === 0 ? "block" : "none";
+}
+
+document.getElementById("search").addEventListener("keydown", function(e) {
+  if (e.key === "Enter") searchJobs();
+});
+</script>
+
+</body>
+</html>
