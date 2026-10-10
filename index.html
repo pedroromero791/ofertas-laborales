@@ -207,7 +207,7 @@ function renderJobs(reset=true){
   <div class="job-top"><div class="badge-group"><span class="source">${escapeHtml(job.source||'Portal de empleo')}</span><span class="badge">${escapeHtml(job.category||'Oportunidad laboral')}</span>${fresh?'<span class="new-badge">NUEVA</span>':''}</div></div>
   <h3>${escapeHtml(job.title)}</h3><div class="company">${escapeHtml(job.company||'Empresa por confirmar')}</div>
   <div class="meta"><span>📍 ${escapeHtml(job.location||'Perú')}</span><span>${norm(job.mode).includes('remot')?'🏠':'🏢'} ${escapeHtml(job.mode||job.type||'Ver modalidad')}</span>${job.salary?`<span>💰 ${escapeHtml(job.salary)}</span>`:''}</div>
-  <p>${escapeHtml(job.description||'Revisa los requisitos y condiciones en el anuncio original.')}</p>
+  <p>${formatJobDescription(job.description||'Revisa los requisitos y condiciones en el anuncio original.')}</p>
   <div class="job-bottom"><small>${escapeHtml(job.source||'Fuente externa')}</small><a class="apply" href="${escapeHtml(job.url||job.link||'#')}" target="_blank" rel="noopener noreferrer">Ver anuncio ↗</a></div>
  </article>`;
  }).join('');
