@@ -3,7 +3,6 @@ name: Actualizar ofertas de empleo
 on:
   workflow_dispatch:
   schedule:
-    # Diario a las 13:17 UTC (08:17 en Perú). GitHub puede retrasar la ejecución.
     - cron: '17 13 * * *'
 
 permissions:
@@ -16,24 +15,26 @@ concurrency:
 jobs:
   actualizar:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
     steps:
       - name: Descargar repositorio
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
       - name: Configurar Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Descubrir enlaces de empleo por RSS público
+      - name: Consultar Jooble y actualizar ofertas
+        env:
+          JOOBLE_API_KEY: ${{ secrets.JOOBLE_API_KEY }}
         run: python scripts/update_jobs.py
-      - name: Guardar cambios en jobs.json
+      - name: Guardar cambios
         run: |
           if git diff --quiet -- jobs.json; then
-            echo "No hay cambios en jobs.json."
+            echo "No hay cambios en las ofertas."
           else
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add jobs.json
-            git commit -m "Actualización automática de ofertas"
+            git commit -m "Actualizar ofertas desde Jooble"
             git push
           fi
