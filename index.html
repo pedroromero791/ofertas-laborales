@@ -57,34 +57,9 @@ footer{background:var(--navy);color:#c4cede;padding:32px 5%;font-size:12px}foote
   <section id="ofertas">
     <div class="section-head">
       <div><h2>Oportunidades destacadas</h2><p>Vacantes localizadas en portales externos. Confirma que sigan abiertas antes de postular.</p></div>
-      <span class="fresh">Selección · 10 oct. 2026</span>
+      <span class="fresh" id="fresh">Ofertas destacadas</span>
     </div>
-    <div class="jobs" id="jobs">
-      <article class="job" data-title="auxiliar producción ensamble operario producción" data-location="lima lurín">
-        <div class="job-top"><span class="source">Computrabajo</span><span class="badge">Producción</span></div>
-        <h3>Auxiliar de Producción / Ensamble</h3>
-        <div class="company">Franquicias Unidas del Perú S.A.C.</div>
-        <div class="meta"><span>📍 Lurín, Lima</span><span>🏢 Presencial</span><span>📄 Revisar requisitos</span></div>
-        <p>Vacante de producción y ensamble detectada en el listado de empleos de Computrabajo. Consulta condiciones, horario y sueldo actualizado en el anuncio original.</p>
-        <div class="job-bottom"><small>Fuente externa</small><a class="apply" href="https://pe.computrabajo.com/trabajo-de-auxiliar-de-produccion-en-lima-en-lurin" target="_blank" rel="noopener">Ver vacantes ↗</a></div>
-      </article>
-      <article class="job" data-title="trabajo remoto atencion cliente turno tarde full time planilla completa concentrix" data-location="lima independencia remoto">
-        <div class="job-top"><span class="source">Computrabajo</span><span class="badge">Opción remota</span></div>
-        <h3>Atención al cliente · Remoto / turno tarde</h3>
-        <div class="company">Concentrix</div>
-        <div class="meta"><span>📍 Independencia, Lima</span><span>🏠 Modalidad remota</span><span>🕒 Tiempo completo</span></div>
-        <p>El anuncio indica trabajo remoto con capacitación presencial en Independencia. Verifica requisitos de experiencia y condiciones directamente con la publicación.</p>
-        <div class="job-bottom"><small>Fuente externa</small><a class="apply" href="https://pe.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-trabajo-remoto-full-time-turno-tarde-planilla-completa-sueldo-fijo-pago-quincenal-en-independencia-0823077DF25AD54161373E686DCF3405" target="_blank" rel="noopener">Ver anuncio ↗</a></div>
-      </article>
-      <article class="job" data-title="asesor de cobranza cobranzas recsa ventas comisiones" data-location="lima santiago de surco jockey plaza">
-        <div class="job-top"><span class="source">Computrabajo</span><span class="badge">Ventas y cobranzas</span></div>
-        <h3>Asesor de Cobranza · Sede Jockey Plaza</h3>
-        <div class="company">RECSA Perú</div>
-        <div class="meta"><span>📍 Santiago de Surco, Lima</span><span>🏢 Presencial</span><span>💰 Sueldo + comisiones</span></div>
-        <p>Oportunidad de cobranzas de cartera castigada. Revisa experiencia solicitada, horario, remuneración y beneficios en el anuncio original.</p>
-        <div class="job-bottom"><small>Fuente externa</small><a class="apply" href="https://pe.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-urgente-gana-2000-s-asesores-cobranzas-castigo-damos-planilla-completa-comisiones-y-bono-descasa-fijo-domingos-en-santiago-de-surco-3735FA4140213CF961373E686DCF3405" target="_blank" rel="noopener">Ver anuncio ↗</a></div>
-      </article>
-    </div>
+    <div class="jobs" id="jobs" aria-live="polite"></div>
     <div class="empty" id="empty">No hay ofertas destacadas que coincidan. Prueba otra palabra o revisa los portales externos.</div>
     <div class="disclaimer"><strong>Importante:</strong> EmpleosPerú.tech es un portal independiente y no es parte del MTPE ni de los portales enlazados. Las vacantes pertenecen a sus respectivas empresas y plataformas; la disponibilidad, remuneración y requisitos pueden cambiar. Nunca pagues por participar en un proceso de selección sin verificar su legitimidad.</div>
   </section>
@@ -99,24 +74,45 @@ footer{background:var(--navy);color:#c4cede;padding:32px 5%;font-size:12px}foote
 const form=document.getElementById('searchForm');
 const keyword=document.getElementById('keyword');
 const locationSelect=document.getElementById('location');
-const cards=[...document.querySelectorAll('.job')];
-function filterJobs(){
+const jobsContainer=document.getElementById('jobs');
+const empty=document.getElementById('empty');
+let jobs=[];
+const escapeHtml=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function renderJobs(){
  const q=keyword.value.trim().toLocaleLowerCase('es');
  const loc=locationSelect.value.toLocaleLowerCase('es');
- let shown=0;
- cards.forEach(card=>{
-   const title=(card.dataset.title+' '+card.textContent).toLocaleLowerCase('es');
-   const where=(card.dataset.location+' '+card.textContent).toLocaleLowerCase('es');
-   const okQ=!q||title.includes(q);
-   const okL=!loc||where.includes(loc)||(loc==='remoto'&&where.includes('remota'));
-   card.style.display=okQ&&okL?'flex':'none';
-   if(okQ&&okL)shown++;
+ const filtered=jobs.filter(job=>{
+   const title=(job.title+' '+job.company+' '+(job.category||'')+' '+(job.description||'')).toLocaleLowerCase('es');
+   const where=(job.location+' '+job.mode).toLocaleLowerCase('es');
+   return (!q||title.includes(q))&&(!loc||where.includes(loc)||(loc==='remoto'&&where.includes('remota')));
  });
- document.getElementById('empty').style.display=shown?'none':'block';
+ jobsContainer.innerHTML=filtered.map(job=>`<article class="job" data-title="${escapeHtml(job.title)}" data-location="${escapeHtml(job.location+' '+job.mode)}">
+  <div class="job-top"><span class="source">${escapeHtml(job.source||'Portal de empleo')}</span><span class="badge">${escapeHtml(job.category||'Oportunidad laboral')}</span></div>
+  <h3>${escapeHtml(job.title)}</h3><div class="company">${escapeHtml(job.company||'Empresa por confirmar')}</div>
+  <div class="meta"><span>📍 ${escapeHtml(job.location||'Perú')}</span><span>${job.mode&&job.mode.toLowerCase().includes('remot')?'🏠':'🏢'} ${escapeHtml(job.mode||'Ver modalidad')}</span>${job.extra?`<span>📄 ${escapeHtml(job.extra)}</span>`:''}</div>
+  <p>${escapeHtml(job.description||'Revisa los requisitos y condiciones en el anuncio original.')}</p>
+  <div class="job-bottom"><small>${escapeHtml(job.source||'Fuente externa')}</small><a class="apply" href="${escapeHtml(job.url)}" target="_blank" rel="noopener noreferrer">Ver anuncio ↗</a></div>
+ </article>`).join('');
+ empty.style.display=filtered.length?'none':'block';
+ if(!jobs.length) empty.textContent='No se pudieron cargar las ofertas. Recarga la página o visita los portales de empleo.';
 }
-form.addEventListener('submit',e=>{e.preventDefault();filterJobs();document.getElementById('ofertas').scrollIntoView({behavior:'smooth'});});
-keyword.addEventListener('input',filterJobs);
-locationSelect.addEventListener('change',filterJobs);
+async function loadJobs(){
+ try{
+   const response=await fetch('jobs.json?v='+Date.now(),{cache:'no-store'});
+   if(!response.ok) throw new Error('No se pudo leer jobs.json');
+   const data=await response.json();
+   jobs=Array.isArray(data.jobs)?data.jobs:[];
+   const date=data.updated?new Date(data.updated+'T12:00:00'):null;
+   document.getElementById('fresh').textContent=date&&!isNaN(date)?'Actualizado · '+date.toLocaleDateString('es-PE',{day:'numeric',month:'short',year:'numeric'}):'Ofertas destacadas';
+   renderJobs();
+ }catch(error){
+   jobs=[]; renderJobs();
+ }
+}
+form.addEventListener('submit',e=>{e.preventDefault();renderJobs();document.getElementById('ofertas').scrollIntoView({behavior:'smooth'});});
+keyword.addEventListener('input',renderJobs);
+locationSelect.addEventListener('change',renderJobs);
+loadJobs();
 </script>
 </body>
 </html>
