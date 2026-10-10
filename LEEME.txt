@@ -1,22 +1,26 @@
-EMPLEOSPERU.TECH — PRIMERA PRUEBA DE ACTUALIZACIÓN AUTOMÁTICA
+EMPLEOSPERU.TECH — ACTUALIZACIÓN AUTOMÁTICA V2 (EXPERIMENTAL)
 
-CONTENIDO
-- index.html: página pública existente.
-- jobs.json: datos de ofertas que consume la web.
-- scripts/update_jobs.py: descubre enlaces directos de ofertas mediante RSS público de Bing; NO visita ni extrae directamente páginas de Computrabajo.
-- .github/workflows/actualizar-empleos.yml: ejecuta el proceso cada día y también permite ejecutarlo manualmente.
+Esta versión amplía la búsqueda RSS pública a 12 categorías: administración, atención al cliente, ventas, producción, almacén/logística, construcción, diseño/marketing, informática, remoto, sin experiencia, prácticas y empleo general.
 
 INSTALACIÓN
 1. Descomprime el ZIP.
-2. Sube todos los archivos y carpetas a la raíz del repositorio pedroromero791/ofertas-laborales.
-3. Conserva las carpetas ocultas: .github/workflows es necesaria.
-4. En GitHub abre Settings > Actions > General y verifica que Actions esté permitido y que el workflow pueda escribir en el repositorio. El workflow declara contents: write.
-5. Abre la pestaña Actions > Actualizar ofertas de empleo > Run workflow para probarlo manualmente.
-6. Abre el registro de ejecución y revisa el paso de descubrimiento. Después revisa https://empleosperu.tech/jobs.json.
+2. En tu repositorio pedroromero791/ofertas-laborales, sube y reemplaza estos archivos:
+   - scripts/update_jobs.py
+   - .github/workflows/actualizar-empleos.yml
+3. No es necesario reemplazar index.html ni jobs.json para instalar esta actualización. El ZIP los incluye como referencia, pero conserva los que ya tienes si hiciste cambios propios.
+4. Confirma los cambios en main.
+5. Ve a Actions > Actualizar ofertas de empleo > Run workflow.
+6. Abre el registro de ejecución y revisa los mensajes del paso de búsqueda. Después revisa https://empleosperu.tech/jobs.json.
 
-LIMITACIONES IMPORTANTES
-- Esto es una prueba experimental de descubrimiento a través de RSS público de búsqueda, no una API oficial de Computrabajo.
-- Los resultados pueden no incluir vacantes nuevas, pueden contener títulos incompletos o enlaces que ya no estén vigentes. La web enlaza al anuncio original y pide verificar sus datos.
-- Si no se descubren enlaces válidos, el script conserva el último jobs.json en lugar de borrarlo.
-- No se consulta directamente Computrabajo ni se intenta eludir sus restricciones. Su aviso legal prohíbe el uso de robots/crawlers y la extracción automatizada; para integración directa se necesitaría autorización o un feed/API permitido.
-- GitHub Actions programado puede ejecutarse con retraso. Para repositorios públicos, los workflows programados pueden desactivarse tras 60 días sin actividad.
+QUÉ CAMBIA
+- Busca en más categorías.
+- Clasifica las ofertas según el título.
+- Combina los enlaces descubiertos con las ofertas existentes para no borrarlas cada día por accidente.
+- Conserva las ofertas manuales/curadas y elimina solo las descubiertas automáticamente que lleven más de 45 días sin reaparecer en resultados.
+- Actualiza las acciones de GitHub a versiones más nuevas.
+
+LIMITACIONES
+- Es una prueba experimental mediante RSS público de Bing, no una API oficial de Computrabajo.
+- Puede encontrar cero enlaces directos, repetir anuncios o no reflejar la vigencia real. No garantiza que haya nuevas vacantes cada día.
+- No rastrea directamente páginas de Computrabajo ni elude restricciones. Para integración directa se necesita un método autorizado por la fuente.
+- La ejecución programada puede retrasarse y, en repositorios públicos, GitHub puede desactivar workflows programados tras 60 días sin actividad.
