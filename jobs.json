@@ -2,17 +2,6 @@
   "updated": "2026-10-10",
   "jobs": [
     {
-      "title": "Auxiliar de Producción / Ensamble",
-      "company": "Franquicias Unidas del Perú S.A.C.",
-      "location": "Lurín, Lima",
-      "mode": "Presencial",
-      "category": "Producción",
-      "source": "Computrabajo",
-      "extra": "Revisar requisitos",
-      "description": "Vacantes de producción y ensamble listadas en Computrabajo. Confirma sueldo, horario y condiciones en el anuncio original.",
-      "url": "https://pe.computrabajo.com/trabajo-de-auxiliar-de-produccion-en-lima-en-lurin"
-    },
-    {
       "title": "Atención al cliente · Remoto / turno tarde",
       "company": "Concentrix",
       "location": "Independencia, Lima",
@@ -22,6 +11,17 @@
       "extra": "Tiempo completo",
       "description": "El anuncio indica trabajo remoto con capacitación presencial en Independencia. Verifica requisitos y condiciones directamente en la publicación.",
       "url": "https://pe.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-trabajo-remoto-full-time-turno-tarde-planilla-completa-sueldo-fijo-pago-quincenal-en-independencia-0823077DF25AD54161373E686DCF3405"
+    },
+    {
+      "title": "Auxiliar de Producción / Ensamble",
+      "company": "Franquicias Unidas del Perú S.A.C.",
+      "location": "Lurín, Lima",
+      "mode": "Presencial",
+      "category": "Producción",
+      "source": "Computrabajo",
+      "extra": "Revisar requisitos",
+      "description": "Vacantes de producción y ensamble listadas en Computrabajo. Confirma sueldo, horario y condiciones en el anuncio original.",
+      "url": "https://pe.computrabajo.com/trabajo-de-auxiliar-de-produccion-en-lima-en-lurin"
     },
     {
       "title": "Asesor de Cobranza · Sede Jockey Plaza",
@@ -35,5 +35,7 @@
       "url": "https://pe.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-urgente-gana-2000-s-asesores-cobranzas-castigo-damos-planilla-completa-comisiones-y-bono-descasa-fijo-domingos-en-santiago-de-surco-3735FA4140213CF961373E686DCF3405"
     }
   ],
-  "note": "Datos iniciales de referencia. Las vacantes pueden cerrar; verifica siempre el anuncio original. El flujo automático intentará descubrir nuevos enlaces mediante RSS público de búsqueda."
+  "note": "Búsqueda experimental completada. Enlaces procesados: 0; consultas RSS fallidas: 0.",
+  "source": "Resultados RSS públicos de Bing; no se rastrean directamente las páginas de Computrabajo.",
+  "searchFailures": 0
 }
