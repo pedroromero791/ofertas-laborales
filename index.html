@@ -18,6 +18,16 @@ footer{background:var(--navy);color:#c4cede;padding:32px 5%;font-size:12px}foote
 @media(max-width:900px){.advanced-filters{grid-template-columns:1fr 1fr}.quick-links{grid-template-columns:repeat(2,1fr)}.jobs{grid-template-columns:repeat(2,minmax(0,1fr))}.search-box{grid-template-columns:1fr 1fr}.search-box button{grid-column:1/-1}.nav-cta{display:none}}
 @media(max-width:600px){.advanced-filters{grid-template-columns:1fr}header{padding:15px 5%;flex-direction:column;align-items:flex-start}nav{width:100%;gap:17px;overflow:auto}nav a{white-space:nowrap}.hero{padding:48px 5% 60px}.hero p{font-size:15px}.search-box{grid-template-columns:1fr}.search-box button{grid-column:auto;width:100%}main{width:92%}.quick-links{grid-template-columns:1fr;margin-bottom:38px}.quick-link{padding:13px}.jobs{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}.section-head h2{font-size:24px}.guides{grid-template-columns:1fr}.job{min-height:0}}
 </style>
+
+<style id="v6-filters">
+.filters-panel{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:12px;margin:18px 0;padding:16px;border-radius:16px;background:rgba(255,255,255,.06)}
+.filter-group{display:flex;flex-direction:column;gap:6px}
+.filter-group label{font-size:13px;font-weight:700}
+.filter-group select{width:100%;padding:11px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.15);background:#fff;color:#222}
+.clear-filters{align-self:end;padding:11px 14px;border:0;border-radius:10px;cursor:pointer;font-weight:700}
+@media(max-width:800px){.filters-panel{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.filters-panel{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 <header>
@@ -36,6 +46,42 @@ footer{background:var(--navy);color:#c4cede;padding:32px 5%;font-size:12px}foote
       <label class="field" aria-label="Puesto o palabra clave">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
         <input id="keyword" type="search" placeholder="¿Qué trabajo buscas? Ej. asistente, ventas..." autocomplete="off">
+<div class="filters-panel" id="filtersPanel">
+  <div class="filter-group">
+    <label for="locationFilter">📍 Ubicación</label>
+    <select id="locationFilter">
+      <option value="">Todas las ubicaciones</option>
+    </select>
+  </div>
+  <div class="filter-group">
+    <label for="typeFilter">💼 Tipo de empleo</label>
+    <select id="typeFilter">
+      <option value="">Todos los tipos</option>
+      <option value="tiempo completo">Tiempo completo</option>
+      <option value="medio tiempo">Medio tiempo</option>
+      <option value="prácticas">Prácticas</option>
+      <option value="temporal">Temporal</option>
+      <option value="freelance">Freelance</option>
+    </select>
+  </div>
+  <div class="filter-group">
+    <label for="professionFilter">🎓 Profesión / área</label>
+    <select id="professionFilter">
+      <option value="">Todas las profesiones</option>
+    </select>
+  </div>
+  <div class="filter-group">
+    <label for="modalityFilter">🏠 Modalidad</label>
+    <select id="modalityFilter">
+      <option value="">Todas</option>
+      <option value="presencial">Presencial</option>
+      <option value="remoto">Remoto</option>
+      <option value="híbrido">Híbrido</option>
+    </select>
+  </div>
+  <button id="clearFilters" class="clear-filters" type="button">Limpiar filtros</button>
+</div>
+
       </label>
       <label class="field" aria-label="Ubicación">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
@@ -48,7 +94,7 @@ footer{background:var(--navy);color:#c4cede;padding:32px 5%;font-size:12px}foote
       <label class="field" aria-label="Modalidad"><span style="font-size:15px">🕐</span><select id="mode"><option value="">Todas las modalidades</option><option value="presencial">Presencial</option><option value="remoto">Remoto</option><option value="híbrido">Híbrido</option><option value="tiempo completo">Tiempo completo</option><option value="medio tiempo">Medio tiempo</option><option value="prácticas">Prácticas</option></select></label>
       <label class="field" aria-label="Empresa"><span style="font-size:15px">🏢</span><input id="company" type="search" placeholder="Empresa" autocomplete="off"></label>
     </div>
-    <p class="hero-note">Las vacantes pueden cerrarse sin aviso. Revisa siempre los detalles en el sitio de origen.</p>
+    <p class="hero-note">Las vacantes se cargan automáticamente desde la base de ofertas. Revisa siempre los detalles en el sitio de origen.</p>
   </div>
 </section>
 <main>
@@ -91,7 +137,7 @@ const loadMoreButton=document.getElementById('loadMore');
 const resultsCount=document.getElementById('resultsCount');
 const pageInfo=document.getElementById('pageInfo');
 const PAGE_SIZE=12;
-let jobs=[];
+window.jobs=[];
 let visibleCount=PAGE_SIZE;
 const escapeHtml=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const norm=value=>String(value??'').toLocaleLowerCase('es').normalize('NFD').replace(/[\u0300-\u036f]/g,'');
@@ -153,17 +199,115 @@ async function loadJobs(){
    const response=await fetch('jobs.json?v='+Date.now(),{cache:'no-store'});
    if(!response.ok) throw new Error('No se pudo leer jobs.json');
    const data=await response.json();
-   jobs=Array.isArray(data.jobs)?data.jobs:[];
+   // Compatible con jobs.json como {jobs:[...]} o como un array directo.
+   if(Array.isArray(data)) jobs=data;
+   else if(Array.isArray(data.jobs)) jobs=data.jobs;
+   else if(Array.isArray(data.results)) jobs=data.results;
+   else jobs=[];
+   // Normaliza campos comunes sin modificar jobs.json.
+   jobs=jobs.map(j=>({
+     ...j,
+     title:j.title||j.position||j.name||'Oferta laboral',
+     company:j.company||j.companyName||'Empresa por confirmar',
+     location:j.location||j.city||'Perú',
+     description:j.description||j.snippet||'Revisa los requisitos y condiciones en el anuncio original.',
+     url:j.url||j.link||j.applyUrl||'#',
+     source:j.source||j.sourceName||'Portal de empleo',
+     category:j.category||j.categoria||'Oportunidad laboral',
+     mode:j.mode||j.modality||j.type||'Ver modalidad'
+   }));
    populateCategories();
    const date=data.updated?new Date(data.updated+'T12:00:00'):null;
    document.getElementById('fresh').textContent=date&&!isNaN(date)?'Actualizado · '+date.toLocaleDateString('es-PE',{day:'numeric',month:'short',year:'numeric'}):'Ofertas destacadas';
    renderJobs();
- }catch(error){jobs=[];renderJobs();}
+ }catch(error){
+   jobs=[];
+   document.getElementById('fresh').textContent='No se pudo cargar la base de ofertas';
+   empty.textContent='No se pudo cargar jobs.json. Ejecuta el workflow de GitHub y vuelve a intentar.';
+   renderJobs();
+ }
 }
 form.addEventListener('submit',e=>{e.preventDefault();renderJobs();document.getElementById('ofertas').scrollIntoView({behavior:'smooth'});});
 [keyword,locationSelect,categorySelect,modeSelect,companyInput,sortSelect].forEach(el=>el.addEventListener('input',()=>renderJobs()));
 loadMoreButton.addEventListener('click',()=>{visibleCount+=PAGE_SIZE;renderJobs(false);});
 loadJobs();
+</script>
+
+<script id="v6-filter-script">
+(function(){
+  const loc = document.getElementById('locationFilter');
+  const type = document.getElementById('typeFilter');
+  const prof = document.getElementById('professionFilter');
+  const mod = document.getElementById('modalityFilter');
+  const clear = document.getElementById('clearFilters');
+  if(!loc || !type || !prof || !mod) return;
+
+  const norm = v => String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
+  const field = (j, names) => {
+    for(const n of names) if(j && j[n] != null && String(j[n]).trim()) return String(j[n]);
+    return '';
+  };
+  const getLocation = j => field(j,['location','ubicacion','city','region','department']);
+  const getType = j => field(j,['type','jobType','employmentType','tipo','tipo_empleo']);
+  const getProfession = j => field(j,['profession','profesion','category','categoria','area','sector']);
+  const getModality = j => field(j,['mode','modality','modalidad','workMode']);
+
+  function unique(values){
+    return [...new Set(values.map(v=>v.trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
+  }
+  function fill(select, values, first){
+    const old=select.value;
+    select.innerHTML='<option value="">'+first+'</option>';
+    unique(values).forEach(v=>{
+      const o=document.createElement('option'); o.value=norm(v); o.textContent=v; select.appendChild(o);
+    });
+    if([...select.options].some(o=>o.value===old)) select.value=old;
+  }
+
+  function populateV6(){
+    if(!Array.isArray(window.jobs)) return;
+    fill(loc, window.jobs.map(getLocation), 'Todas las ubicaciones');
+    // Keep fixed employment choices but add detected types.
+    const detected=unique(window.jobs.map(getType));
+    detected.forEach(v=>{
+      if(![...type.options].some(o=>o.value===norm(v))){
+        const o=document.createElement('option'); o.value=norm(v); o.textContent=v; type.appendChild(o);
+      }
+    });
+    fill(prof, window.jobs.map(getProfession), 'Todas las profesiones');
+    const detectedModes=unique(window.jobs.map(getModality));
+    detectedModes.forEach(v=>{
+      if(![...mod.options].some(o=>o.value===norm(v))){
+        const o=document.createElement('option'); o.value=norm(v); o.textContent=v; mod.appendChild(o);
+      }
+    });
+  }
+
+  function applyV6(){
+    if(!Array.isArray(window.jobs)) return;
+    const filters={l:norm(loc.value),t:norm(type.value),p:norm(prof.value),m:norm(mod.value)};
+    const original=window.jobs;
+    window.jobs=original.filter(j=>{
+      const hay=norm([j.title,j.description,j.company,j.location,j.category,j.profession,j.type,j.mode,j.modality].join(' '));
+      return (!filters.l || norm(getLocation(j)).includes(filters.l))
+        && (!filters.t || hay.includes(filters.t))
+        && (!filters.p || hay.includes(filters.p))
+        && (!filters.m || hay.includes(filters.m));
+    });
+    if(typeof window.renderJobs==='function') window.renderJobs();
+    window.jobs=original;
+  }
+
+  [loc,type,prof,mod].forEach(x=>x.addEventListener('change',applyV6));
+  clear && clear.addEventListener('click',()=>{
+    loc.value=type.value=prof.value=mod.value='';
+    applyV6();
+  });
+
+  const timer=setInterval(()=>{
+    if(Array.isArray(window.jobs) && window.jobs.length){populateV6();clearInterval(timer);}
+  },300);
+})();
 </script>
 </body>
 </html>
