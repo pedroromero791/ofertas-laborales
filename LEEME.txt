@@ -30,3 +30,6 @@ PASO 3 — PRUEBA
 4. Debes ver cuatro líneas de consulta y un resumen con los resultados únicos guardados.
 
 La API Key nunca debe aparecer en los logs: GitHub la enmascara como ***.
+
+
+V5 — filtros avanzados: palabra clave, ubicación, categoría, modalidad, empresa y orden por recientes/A-Z. Las ofertas recibidas en las últimas 72 horas se marcan como NUEVA.
