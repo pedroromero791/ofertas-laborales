@@ -154,7 +154,6 @@ for query, fallback_category in queries:
                 'url': link,
                 'externalDiscovery': True,
                 'updatedSource': raw.get('updated', ''),
-                'fetchedAt': datetime.now(timezone.utc).isoformat(),
             })
     except urllib.error.HTTPError as e:
         detail = e.read().decode('utf-8', 'replace')[:500]
