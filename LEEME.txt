@@ -1,37 +1,32 @@
-EMPLEOSPERU.TECH V3 — MÁS OFERTAS + JOOBLE API
+EMPLEOSPERU.TECH V4 — MÁS OFERTAS POR CATEGORÍAS + JOOBLE API
 
-QUÉ INCLUYE
-- index.html: muestra 12 ofertas por tanda y botón “Ver más ofertas”. También muestra el total y mantiene búsqueda/filtro.
-- scripts/update_jobs.py: importa resultados desde la API REST oficial de Jooble Perú.
-- .github/workflows/actualizar-empleos.yml: ejecuta la actualización una vez al día y permite ejecución manual.
+QUÉ CAMBIA
+- El sitio conserva el botón “Ver más ofertas” y puede mostrar hasta 12 por tanda.
+- El actualizador consulta 4 búsquedas distintas por ejecución en Jooble, hasta 50 resultados por búsqueda.
+- Las búsquedas rotan por día para cubrir Administración, Ventas, TI, Construcción, Salud, Educación, remoto, prácticas, ciudades y otras áreas.
+- Se guardan hasta 200 ofertas, eliminando duplicados por URL.
 
-PASO 1 — SOLICITA LA CLAVE
-1. Abre https://pe.jooble.org/api/about
-2. Completa el formulario para solicitar acceso a la API para EmpleosPerú.tech.
-3. Guarda la clave de forma privada. No la publiques en index.html ni en ningún archivo del repositorio.
+IMPORTANTE SOBRE LA CUOTA
+- Cada ejecución diaria usa hasta 4 solicitudes de API.
+- Si la clave de Jooble tiene un límite de 500 solicitudes de por vida, son aproximadamente 125 ejecuciones diarias antes de agotar esa cuota.
+- No ejecutes manualmente muchas veces sin necesidad. Si Jooble cambia las condiciones de la cuota, prevalecen sus condiciones actuales.
 
-PASO 2 — AÑADE EL SECRETO EN GITHUB
-1. Entra en https://github.com/pedroromero791/ofertas-laborales/settings/secrets/actions
-2. Pulsa New repository secret.
-3. Name: JOOBLE_API_KEY
-4. Secret: pega la clave de API que te entregue Jooble.
-5. Guarda.
+PASO 1 — ACTUALIZA LOS ARCHIVOS
+Sube/reemplaza únicamente:
+- index.html
+- scripts/update_jobs.py
+- .github/workflows/actualizar-empleos.yml
 
-PASO 3 — SUBE LOS ARCHIVOS
-Descomprime este ZIP y sube/reemplaza únicamente:
-- index.html (raíz del repositorio)
-- scripts/update_jobs.py (dentro de scripts)
-- .github/workflows/actualizar-empleos.yml (conservando la ruta)
-No reemplaces jobs.json manualmente: lo actualizará el proceso cuando la API funcione.
+No publiques la API Key ni reemplaces jobs.json manualmente.
 
-PASO 4 — PRUEBA
-1. Abre la pestaña Actions.
-2. Selecciona “Actualizar ofertas de empleo”.
-3. Pulsa Run workflow.
-4. Si funciona, el registro mostrará cuántas ofertas devolvió Jooble y jobs.json se actualizará.
+PASO 2 — SECRETO
+En GitHub Settings → Secrets and variables → Actions debe existir:
+JOOBLE_API_KEY
 
-IMPORTANTE
-- La API gratuita documenta un límite de 500 solicitudes por clave para toda su vida útil. Este flujo hace una solicitud por ejecución para conservar el cupo. Revisa las condiciones actuales de Jooble.
-- La primera ejecución requiere que Jooble apruebe/entregue una clave válida. No compartas la clave en mensajes ni capturas.
-- La web muestra 12 tarjetas por tanda y permite mostrar más, pero el número real de ofertas depende de los resultados que devuelva la API. No inventa vacantes.
-- Los resultados y la vigencia de cada anuncio dependen de Jooble y de la fuente original.
+PASO 3 — PRUEBA
+1. Ve a Actions → Actualizar ofertas de empleo.
+2. Pulsa Run workflow una sola vez.
+3. Abre el paso “Consultar Jooble y actualizar ofertas”.
+4. Debes ver cuatro líneas de consulta y un resumen con los resultados únicos guardados.
+
+La API Key nunca debe aparecer en los logs: GitHub la enmascara como ***.
