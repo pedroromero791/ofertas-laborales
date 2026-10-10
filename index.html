@@ -28,6 +28,30 @@ footer{background:var(--navy);color:#c4cede;padding:32px 5%;font-size:12px}foote
 @media(max-width:800px){.filters-panel{grid-template-columns:1fr 1fr}}
 @media(max-width:520px){.filters-panel{grid-template-columns:1fr}}
 </style>
+
+<script id="description-format-fix">
+function formatJobDescription(value){
+  let s = String(value || '');
+  // Decode entities such as &nbsp;, &amp;, &lt;, etc.
+  s = s.replace(/&(?:nbsp|amp|lt|gt|quot|#39|#x27);/gi, m => {
+    const map = {'&nbsp;':' ','&amp;':'&','&lt;':'<','&gt;':'>','&quot;':'"',"&#39;":"'","&#x27;":"'"};
+    return map[m.toLowerCase()] ?? m;
+  });
+  // Decode once more if the API double-encoded the HTML.
+  s = s.replace(/&(?:nbsp|amp|lt|gt|quot|#39|#x27);/gi, m => {
+    const map = {'&nbsp;':' ','&amp;':'&','&lt;':'<','&gt;':'>','&quot;':'"',"&#39;":"'","&#x27;":"'"};
+    return map[m.toLowerCase()] ?? m;
+  });
+  // Keep only simple formatting tags. Escape everything else.
+  s = s.replace(/<\s*(b|strong)\s*>/gi,'\u0001')
+       .replace(/<\s*\/\s*(b|strong)\s*>/gi,'\u0002')
+       .replace(/<\s*br\s*\/?\s*>/gi,'\n');
+  s = s.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  s = s.replace(/\u0001/g,'<strong>').replace(/\u0002/g,'</strong>');
+  return s.replace(/\n/g,'<br>');
+}
+</script>
+
 </head>
 <body>
 <header>
