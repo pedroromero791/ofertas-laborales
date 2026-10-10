@@ -1,26 +1,37 @@
-EMPLEOSPERU.TECH — ACTUALIZACIÓN AUTOMÁTICA V2 (EXPERIMENTAL)
+EMPLEOSPERU.TECH V3 — MÁS OFERTAS + JOOBLE API
 
-Esta versión amplía la búsqueda RSS pública a 12 categorías: administración, atención al cliente, ventas, producción, almacén/logística, construcción, diseño/marketing, informática, remoto, sin experiencia, prácticas y empleo general.
+QUÉ INCLUYE
+- index.html: muestra 12 ofertas por tanda y botón “Ver más ofertas”. También muestra el total y mantiene búsqueda/filtro.
+- scripts/update_jobs.py: importa resultados desde la API REST oficial de Jooble Perú.
+- .github/workflows/actualizar-empleos.yml: ejecuta la actualización una vez al día y permite ejecución manual.
 
-INSTALACIÓN
-1. Descomprime el ZIP.
-2. En tu repositorio pedroromero791/ofertas-laborales, sube y reemplaza estos archivos:
-   - scripts/update_jobs.py
-   - .github/workflows/actualizar-empleos.yml
-3. No es necesario reemplazar index.html ni jobs.json para instalar esta actualización. El ZIP los incluye como referencia, pero conserva los que ya tienes si hiciste cambios propios.
-4. Confirma los cambios en main.
-5. Ve a Actions > Actualizar ofertas de empleo > Run workflow.
-6. Abre el registro de ejecución y revisa los mensajes del paso de búsqueda. Después revisa https://empleosperu.tech/jobs.json.
+PASO 1 — SOLICITA LA CLAVE
+1. Abre https://pe.jooble.org/api/about
+2. Completa el formulario para solicitar acceso a la API para EmpleosPerú.tech.
+3. Guarda la clave de forma privada. No la publiques en index.html ni en ningún archivo del repositorio.
 
-QUÉ CAMBIA
-- Busca en más categorías.
-- Clasifica las ofertas según el título.
-- Combina los enlaces descubiertos con las ofertas existentes para no borrarlas cada día por accidente.
-- Conserva las ofertas manuales/curadas y elimina solo las descubiertas automáticamente que lleven más de 45 días sin reaparecer en resultados.
-- Actualiza las acciones de GitHub a versiones más nuevas.
+PASO 2 — AÑADE EL SECRETO EN GITHUB
+1. Entra en https://github.com/pedroromero791/ofertas-laborales/settings/secrets/actions
+2. Pulsa New repository secret.
+3. Name: JOOBLE_API_KEY
+4. Secret: pega la clave de API que te entregue Jooble.
+5. Guarda.
 
-LIMITACIONES
-- Es una prueba experimental mediante RSS público de Bing, no una API oficial de Computrabajo.
-- Puede encontrar cero enlaces directos, repetir anuncios o no reflejar la vigencia real. No garantiza que haya nuevas vacantes cada día.
-- No rastrea directamente páginas de Computrabajo ni elude restricciones. Para integración directa se necesita un método autorizado por la fuente.
-- La ejecución programada puede retrasarse y, en repositorios públicos, GitHub puede desactivar workflows programados tras 60 días sin actividad.
+PASO 3 — SUBE LOS ARCHIVOS
+Descomprime este ZIP y sube/reemplaza únicamente:
+- index.html (raíz del repositorio)
+- scripts/update_jobs.py (dentro de scripts)
+- .github/workflows/actualizar-empleos.yml (conservando la ruta)
+No reemplaces jobs.json manualmente: lo actualizará el proceso cuando la API funcione.
+
+PASO 4 — PRUEBA
+1. Abre la pestaña Actions.
+2. Selecciona “Actualizar ofertas de empleo”.
+3. Pulsa Run workflow.
+4. Si funciona, el registro mostrará cuántas ofertas devolvió Jooble y jobs.json se actualizará.
+
+IMPORTANTE
+- La API gratuita documenta un límite de 500 solicitudes por clave para toda su vida útil. Este flujo hace una solicitud por ejecución para conservar el cupo. Revisa las condiciones actuales de Jooble.
+- La primera ejecución requiere que Jooble apruebe/entregue una clave válida. No compartas la clave en mensajes ni capturas.
+- La web muestra 12 tarjetas por tanda y permite mostrar más, pero el número real de ofertas depende de los resultados que devuelva la API. No inventa vacantes.
+- Los resultados y la vigencia de cada anuncio dependen de Jooble y de la fuente original.

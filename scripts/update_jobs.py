@@ -1,162 +1,114 @@
 #!/usr/bin/env python3
-"""Experimental job-link discovery via Bing public RSS results.
-Does not crawl employer/job-board pages. It merges discovered direct offer URLs
-with the existing JSON, classifies by title, and preserves prior records when
-RSS returns no usable results. No guarantee of completeness or freshness.
+"""Import job listings through Jooble's official REST API.
+Requires JOOBLE_API_KEY in the environment. Uses one API request per run to
+conserve the documented free lifetime quota. Does not scrape job boards.
 """
-from __future__ import annotations
-import json, os, re, sys, time
-from datetime import datetime, timezone, timedelta
-from urllib.parse import quote, urlparse, parse_qs, unquote
-from urllib.request import Request, urlopen
-from xml.etree import ElementTree as ET
+import json, os, sys, urllib.request, urllib.error
+from datetime import datetime, timezone
+from pathlib import Path
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-JOBS_PATH = os.path.join(ROOT, "jobs.json")
-USER_AGENT = "EmpleosPeruTech-JobDiscovery/2.0 (public RSS search; does not crawl job-board pages)"
-QUERIES = [
-    ("Administración", 'site:pe.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo empleo administración Perú'),
-    ("Atención al cliente", 'site:pe.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo atención al cliente Perú'),
-    ("Ventas", 'site:pe.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo asesor ventas vendedor Perú'),
-    ("Producción", 'site:pe.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo producción operario Perú'),
-    ("Almacén y logística", 'site:pe.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo almacén logística auxiliar Perú'),
-    ("Construcción", 'site:pe.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo construcción técnico obra Perú'),
-    ("Diseño y marketing", 'site:pe.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo diseñador marketing Perú'),
-    ("Informática", 'site:pe.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo sistemas informática soporte técnico Perú'),
-    ("Trabajo remoto", 'site:pe.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo trabajo remoto teletrabajo Perú'),
-    ("Sin experiencia", 'site:pe.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo sin experiencia primer empleo Perú'),
-    ("Prácticas", 'site:pe.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo practicante prácticas preprofesionales Perú'),
-    ("Empleo general", 'site:pe.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo empleo Lima Perú'),
-]
+ROOT=Path(__file__).resolve().parent.parent
+JOBS_FILE=ROOT/'jobs.json'
+API_KEY=os.environ.get('JOOBLE_API_KEY','').strip()
+ENDPOINT='https://pe.jooble.org/api/'
 
+if not API_KEY:
+    print('ERROR: falta el secreto JOOBLE_API_KEY. Solicita la clave en https://pe.jooble.org/api/about y guárdala en GitHub Secrets.')
+    sys.exit(2)
 
-def bing_rss(query: str) -> bytes:
-    url = "https://www.bing.com/search?format=rss&q=" + quote(query)
-    req = Request(url, headers={"User-Agent": USER_AGENT, "Accept": "application/rss+xml,application/xml,text/xml"})
-    with urlopen(req, timeout=25) as response:
-        return response.read()
+payload={
+    'keywords':'empleo',
+    'location':'Perú',
+    'page':'1',
+    'ResultOnPage':50,
+    'companysearch':False
+}
+request=urllib.request.Request(
+    ENDPOINT+API_KEY,
+    data=json.dumps(payload,ensure_ascii=False).encode('utf-8'),
+    headers={'Content-Type':'application/json','Accept':'application/json','User-Agent':'EmpleosPeru.tech/1.0'},
+    method='POST'
+)
+try:
+    with urllib.request.urlopen(request,timeout=35) as response:
+        result=json.loads(response.read().decode('utf-8'))
+except urllib.error.HTTPError as e:
+    detail=e.read().decode('utf-8','replace')[:500]
+    print(f'ERROR Jooble API HTTP {e.code}: {detail}')
+    sys.exit(1)
+except Exception as e:
+    print(f'ERROR consultando Jooble API: {e}')
+    sys.exit(1)
 
-
-def unwrap_url(raw: str) -> str:
-    try:
-        params = parse_qs(urlparse(raw).query)
-        for key in ("url", "u", "target"):
-            if key in params:
-                candidate = unquote(params[key][0])
-                if candidate.startswith("http"):
-                    return candidate
-    except Exception:
-        pass
-    return raw
-
-
-def clean_title(title: str) -> str:
-    title = re.sub(r"\s+[-|–—]\s+Computrabajo.*$", "", title, flags=re.I)
-    return re.sub(r"\s+", " ", title).strip()[:180]
-
-
-def category_for(title: str, query_category: str) -> str:
-    t = title.casefold()
-    rules = [
-        ("Trabajo remoto", ("remoto", "remota", "teletrabajo", "desde casa")),
-        ("Atención al cliente", ("atención al cliente", "call center", "servicio al cliente", "customer")),
-        ("Ventas", ("ventas", "vendedor", "asesor comercial", "comercial")),
-        ("Administración", ("administrativo", "administrativa", "asistente", "secretaria", "contable")),
-        ("Producción", ("producción", "operario", "ensamble", "manufactura")),
-        ("Almacén y logística", ("almacén", "almacen", "logística", "logistica", "despacho", "inventario")),
-        ("Construcción", ("construcción", "construccion", "obra", "electricista", "gasfitero")),
-        ("Diseño y marketing", ("diseñador", "diseñadora", "diseño", "marketing", "community manager")),
-        ("Informática", ("sistemas", "informática", "informatica", "soporte técnico", "programador", "desarrollador")),
-        ("Prácticas", ("practicante", "prácticas", "practicas", "preprofesional")),
+new_jobs=[]
+for raw in result.get('jobs',[]):
+    link=(raw.get('link') or '').strip()
+    title=(raw.get('title') or '').strip()
+    if not link.startswith('http') or not title:
+        continue
+    title_l=title.casefold()
+    category='Empleo general'
+    rules=[
+        ('Atención al cliente',('atención al cliente','call center','servicio al cliente')),
+        ('Ventas',('ventas','vendedor','asesor comercial','ejecutivo comercial')),
+        ('Administración',('administrativo','administrativa','asistente','secretaria','contable')),
+        ('Producción',('producción','operario','ensamble','manufactura')),
+        ('Almacén y logística',('almacén','almacen','logística','logistica','despacho','inventario')),
+        ('Construcción',('construcción','construccion','obra','electricista','gasfitero')),
+        ('Diseño y marketing',('diseñador','diseñadora','diseño','marketing','community manager')),
+        ('Informática',('sistemas','informática','informatica','soporte técnico','programador','desarrollador')),
+        ('Trabajo remoto',('remoto','remota','teletrabajo','desde casa')),
+        ('Prácticas',('practicante','prácticas','practicas','preprofesional')),
     ]
-    for category, terms in rules:
-        if any(term in t for term in terms):
-            return category
-    return query_category
+    for cat,terms in rules:
+        if any(term in title_l for term in terms):
+            category=cat; break
+    loc=(raw.get('location') or 'Perú').strip()
+    typ=(raw.get('type') or 'Ver modalidad').strip()
+    salary=(raw.get('salary') or '').strip()
+    new_jobs.append({
+        'title':title,
+        'company':(raw.get('company') or 'Empresa por confirmar').strip(),
+        'location':loc,
+        'mode':typ,
+        'category':category,
+        'source':(raw.get('source') or 'Jooble').strip(),
+        'extra':'Actualización de Jooble',
+        'salary':salary,
+        'description':(raw.get('snippet') or 'Consulta los requisitos y condiciones en la publicación original.').strip(),
+        'url':link,
+        'externalDiscovery':True,
+        'updatedSource':raw.get('updated','')
+    })
 
-
-def valid_offer_url(link: str) -> bool:
-    parsed = urlparse(link)
-    host = (parsed.hostname or "").lower()
-    path = parsed.path.lower()
-    return host in {"pe.computrabajo.com", "www.computrabajo.com"} and "/ofertas-de-trabajo/oferta-de-trabajo-" in path
-
-
-def main() -> int:
-    try:
-        with open(JOBS_PATH, encoding="utf-8") as f:
-            old_data = json.load(f)
-    except Exception:
-        old_data = {"updated": None, "jobs": []}
-    old_jobs = old_data.get("jobs", []) if isinstance(old_data.get("jobs", []), list) else []
-    merged: dict[str, dict] = {}
-    for job in old_jobs:
-        if isinstance(job, dict) and job.get("url"):
-            merged[str(job["url"])] = job
-
-    found_count = 0
-    failures = 0
-    today = datetime.now(timezone.utc).date().isoformat()
-    for query_category, query in QUERIES:
-        try:
-            root = ET.fromstring(bing_rss(query))
-            for item in root.findall(".//item"):
-                title_el, link_el = item.find("title"), item.find("link")
-                if title_el is None or link_el is None or not title_el.text or not link_el.text:
-                    continue
-                link = unwrap_url(link_el.text.strip())
-                if not valid_offer_url(link):
-                    continue
-                title = clean_title(title_el.text)
-                if not title:
-                    continue
-                previous = merged.get(link, {})
-                merged[link] = {
-                    **previous,
-                    "title": title,
-                    "company": previous.get("company", "Consulta la empresa en el anuncio"),
-                    "location": previous.get("location", "Perú · Ver anuncio"),
-                    "mode": previous.get("mode", "Por confirmar"),
-                    "category": category_for(title, query_category),
-                    "source": "Computrabajo · resultado de búsqueda",
-                    "extra": previous.get("extra", "Verificar vigencia"),
-                    "description": previous.get("description", "Enlace descubierto mediante resultados públicos de búsqueda. Confirma empresa, ubicación, sueldo, requisitos y vigencia en el anuncio original."),
-                    "url": link,
-                    "discoveredAt": previous.get("discoveredAt", today),
-                    "lastSeen": today,
-                    "externalDiscovery": True,
-                }
-                found_count += 1
-        except Exception as exc:
-            failures += 1
-            print(f"RSS query failed ({query_category}): {exc}", file=sys.stderr)
-        time.sleep(1)
-
-    # Keep curated/manual listings. Expire only automatically discovered links not seen in 45 days.
-    cutoff = (datetime.now(timezone.utc).date() - timedelta(days=45)).isoformat()
-    kept = []
-    for job in merged.values():
-        if job.get("externalDiscovery"):
-            last_seen = str(job.get("lastSeen") or job.get("discoveredAt") or "")
-            if last_seen and last_seen < cutoff:
-                continue
-        kept.append(job)
-    kept.sort(key=lambda j: (str(j.get("category", "")).casefold(), str(j.get("title", "")).casefold()))
-    status = f"Búsqueda experimental completada. Enlaces procesados: {found_count}; consultas RSS fallidas: {failures}."
-    data = {
-        "updated": today,
-        "jobs": kept,
-        "note": status,
-        "source": "Resultados RSS públicos de Bing; no se rastrean directamente las páginas de Computrabajo.",
-        "searchFailures": failures,
-    }
-    with open(JOBS_PATH, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-        f.write("\n")
-    print(f"Ofertas guardadas: {len(kept)}; enlaces procesados hoy: {found_count}; consultas fallidas: {failures}")
-    if found_count == 0:
-        print("Aviso: no se descubrieron enlaces directos nuevos en esta ejecución; se conservaron ofertas anteriores.")
-    return 0
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+# Preserve existing manually curated offers, then append fresh API results without duplicate URLs.
+try:
+    old=json.loads(JOBS_FILE.read_text(encoding='utf-8'))
+    old_jobs=old.get('jobs',[]) if isinstance(old.get('jobs',[]),list) else []
+except Exception:
+    old_jobs=[]
+merged={}
+for job in old_jobs:
+    if isinstance(job,dict) and (job.get('url') or job.get('link')):
+        merged[job.get('url') or job.get('link')]=job
+for job in new_jobs:
+    merged[job['url']]=job
+jobs=list(merged.values())
+# Put fresh API results first; retain curated listings afterwards.
+api_urls={job['url'] for job in new_jobs}
+jobs.sort(key=lambda j: (0 if (j.get('url') or j.get('link')) in api_urls else 1, str(j.get('title','')).casefold()))
+# Cap file size while prioritizing latest API results.
+jobs=jobs[:100]
+today=datetime.now(timezone.utc).date().isoformat()
+data={
+    'updated':today,
+    'jobs':jobs,
+    'note':f'Jooble API: {len(new_jobs)} resultados recibidos; {len(jobs)} ofertas disponibles en total.',
+    'source':'Jooble REST API oficial; los anuncios pertenecen a sus fuentes originales.',
+    'totalCount':result.get('totalCount',len(new_jobs)),
+    'apiResults':len(new_jobs)
+}
+JOBS_FILE.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+print(f"Jooble informó {data['totalCount']} coincidencias; se recibieron {len(new_jobs)} resultados y se guardaron {len(jobs)} ofertas.")
+if not new_jobs:
+    print('AVISO: la API no devolvió ofertas para la consulta general. Se conservaron las ofertas anteriores.')
