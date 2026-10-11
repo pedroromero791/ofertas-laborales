@@ -2,6 +2,10 @@ name: Actualizar convocatorias del Estado
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/update_state_jobs.py'
+      - '.github/workflows/actualizar-convocatorias.yml'
   schedule:
     - cron: '47 13 * * *'
 
