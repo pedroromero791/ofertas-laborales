@@ -85,7 +85,7 @@ function formatJobDescription(value){
       </label>
       <label class="field" aria-label="Modalidad">
         <span style="font-size:15px">🏠</span>
-        <select id="mode"><option value="">Todas las modalidades</option><option value="presencial">Presencial</option><option value="remoto">Remoto</option><option value="híbrido">Híbrido</option></select>
+        <select id="mode"><option value="">Todas las modalidades</option><option value="presencial">Presencial</option><option value="remoto">Remoto</option><option value="híbrido">Híbrido</option><option value="no especificada">No especificada</option></select>
       </label>
       <label class="field" aria-label="Empresa">
         <span style="font-size:15px">🏢</span>
@@ -156,51 +156,38 @@ function getEmploymentType(job){
  return raw;
 }
 function getJobMode(job){
- // 1) Si la fuente entrega una modalidad explícita, usamos ese dato primero.
  const explicit=norm([job.modality,job.workMode,job.work_mode,job.modalidad].filter(Boolean).join(' '));
- if(explicit){
-   if(/hibrid|hybrid/.test(explicit)) return 'híbrido';
-   if(/remot|remote|teletrabaj|home office|desde casa/.test(explicit)) return 'remoto';
-   if(/presencial|on site|en sitio|en oficina|en sede/.test(explicit)) return 'presencial';
- }
-
- // 2) Si no hay campo explícito, solo clasificamos cuando el texto da
- // una señal clara de modalidad. No basta con que aparezca la palabra
- // "remoto" o "presencial" en cualquier parte de la descripción.
  const title=norm(job.title||'');
  const description=norm(job.description||'');
  const text=title+' '+description;
+ const all=norm([title,description,job.location,job.company].filter(Boolean).join(' '));
 
- // Híbrido primero para evitar que una oferta híbrida que también menciona
- // trabajo remoto sea clasificada incorrectamente como 100% remota.
- if(/modalidad(?: de trabajo)?[:\s-]*(hibrid|hybrid)|trabajo (?:en modalidad )?hibrid|modalidad hibrid|puesto hibrid|empleo hibrid/.test(text)) return 'híbrido';
+ // Si la fuente trae una modalidad explícita, tiene prioridad.
+ if(explicit){
+   if(/\b(hibrid|hybrid)\b/.test(explicit)) return 'híbrido';
+   if(/\b(remot|remote|teletrabaj|home office)\b/.test(explicit)) return 'remoto';
+   if(/\b(presencial|on[- ]?site|onsite)\b/.test(explicit)) return 'presencial';
+ }
 
- if(/(?:modalidad(?: de trabajo)?|trabajo|puesto|empleo|posicion|cargo)[:\s-]*(remot|remote)|trabajo remoto|trabajo 100 ?% remoto|100 ?% remoto|modalidad remota|teletrabajo|home office|desde casa|remoto de forma permanente/.test(text)) return 'remoto';
+ // Híbrido: se evalúa antes que remoto porque suele mencionar ambas modalidades.
+ if(/(?:modalidad|trabajo|puesto|empleo|posicion|cargo)\s*(?:de trabajo)?\s*[:\-]?\s*(?:hibrid|hybrid)\b/.test(text)
+   || /\b(?:trabajo|modalidad)\s+hibrid[oa]\b/.test(text)
+   || /\bhibrid[oa]\s+(?:con|y)\s+(?:remoto|presencial)\b/.test(text)
+   || /\b(?:remoto|presencial)\s+y\s+hibrid[oa]\b/.test(text)) return 'híbrido';
 
- if(/(?:modalidad(?: de trabajo)?|trabajo|puesto|empleo|posicion|cargo)[:\s-]*(presencial)|trabajo presencial|modalidad presencial|presencial en (?:oficina|sede|planta)|en oficina|en sede|en planta|on site|en sitio/.test(text)) return 'presencial';
+ // Remoto: exigimos contexto de modalidad, no una mención incidental.
+ if(/(?:modalidad|trabajo|puesto|empleo|posicion|cargo)\s*(?:de trabajo)?\s*[:\-]?\s*(?:100\s*%\s*)?(?:remot|remote)\b/.test(text)
+   || /\b(?:100\s*%\s*)?remot[oa]\b/.test(title)
+   || /\b(?:teletrabajo|home office|work from home|wfh)\b/.test(text)
+   || /\bdesde casa\b/.test(text)) return 'remoto';
 
- return '';
-}
+ // Presencial: no usamos "Lima", "oficina" aislada ni "jornada completa" como prueba suficiente.
+ if(/(?:modalidad|trabajo|puesto|empleo|posicion|cargo)\s*(?:de trabajo)?\s*[:\-]?\s*presencial\b/.test(text)
+   || /\btrabajo presencial\b/.test(text)
+   || /\bpresencial\s+(?:en|desde)\s+(?:oficina|sede|planta)\b/.test(text)
+   || /\b(?:on[- ]?site|onsite)\b/.test(text)) return 'presencial';
 
-function populateCategories(){
- const categoryMap=new Map();
- jobs.forEach(j=>{
-   const label=String(j.category||'').trim();
-   if(label){
-     const key=categoryKey(label);
-     if(!categoryMap.has(key)) categoryMap.set(key,label);
-   }
- });
- const cats=[...categoryMap.values()].sort((a,b)=>a.localeCompare(b,'es'));
- categorySelect.innerHTML='<option value="">Todas las categorías</option>'+cats.map(c=>`<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
-}
-function populateEmploymentTypes(){
- const values=[...new Set(jobs.map(j=>j.type||j.jobType||j.employmentType||j.tipo_empleo).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
- values.forEach(v=>{
-   if(![...employmentTypeSelect.options].some(o=>norm(o.value)===norm(v))){
-     employmentTypeSelect.insertAdjacentHTML('beforeend',`<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`);
-   }
- });
+ return 'no especificada';
 }
 function isNew(job){
  const d=job.fetchedAt||job.updatedSource||'';
@@ -226,7 +213,7 @@ function filteredJobs(){
      &&(!loc||norm(job.location||'').includes(loc)||(loc==='remoto'&&jobMode.includes('remot')))
      &&(!cat||category===cat)
      &&(!employmentType||type.includes(employmentType)||title.includes(employmentType))
-     &&(!mode||jobMode===mode||(mode==='remoto'&&jobMode.includes('remot'))||(mode==='hibrido'&&jobMode.includes('hibrid')))
+     &&(!mode || jobMode===mode)
      &&(!company||companyText.includes(company));
  });
  if(sortSelect.value==='title') list.sort((a,b)=>String(a.title||'').localeCompare(String(b.title||''),'es'));
@@ -243,7 +230,7 @@ function renderJobs(reset=true){
    return `<article class="job${fresh?' new-job':''}">
   <div class="job-top"><div class="badge-group"><span class="source">${escapeHtml(job.source||'Portal de empleo')}</span><span class="badge">${escapeHtml(job.category||'Oportunidad laboral')}</span>${fresh?'<span class="new-badge">NUEVA</span>':''}</div></div>
   <h3>${escapeHtml(job.title)}</h3><div class="company">${escapeHtml(job.company||'Empresa por confirmar')}</div>
-  <div class="meta"><span>📍 ${escapeHtml(job.location||'Perú')}</span><span>${getJobMode(job)==='remoto'?'🏠 ':getJobMode(job)==='híbrido'?'🔄 ':getJobMode(job)==='presencial'?'🏢 ':''}${escapeHtml(getJobMode(job)||'Modalidad no especificada')}</span>${job.salary?`<span>💰 ${escapeHtml(job.salary)}</span>`:''}</div>
+  <div class="meta"><span>📍 ${escapeHtml(job.location||'Perú')}</span><span>${getJobMode(job)==='remoto'?'🏠 ':getJobMode(job)==='híbrido'?'🔄 ':getJobMode(job)==='presencial'?'🏢 ':''}${escapeHtml(getJobMode(job)==='no especificada'?'Modalidad no especificada':getJobMode(job))}</span>${job.salary?`<span>💰 ${escapeHtml(job.salary)}</span>`:''}</div>
   <p>${formatJobDescription(job.description||'Revisa los requisitos y condiciones en el anuncio original.')}</p>
   <div class="job-bottom"><small>${escapeHtml(job.source||'Fuente externa')}</small><a class="apply" href="${escapeHtml(job.url||job.link||'#')}" target="_blank" rel="noopener noreferrer">Ver anuncio ↗</a></div>
  </article>`;
