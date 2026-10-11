@@ -139,9 +139,41 @@ const PAGE_SIZE=12;
 window.jobs=[];
 let visibleCount=PAGE_SIZE;
 const escapeHtml=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const norm=value=>String(value??'').toLocaleLowerCase('es').normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+const norm=value=>String(value??'').toLocaleLowerCase('es').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim();
+const categoryKey=value=>norm(value).replace(/\s*[\/|>]+\s*/g,'/');
+
+function getJobText(job){
+ return norm([job.title,job.description,job.extra,job.mode,job.modality,job.workMode,job.type,job.jobType,job.employmentType,job.tipo_empleo].filter(Boolean).join(' '));
+}
+function getEmploymentType(job){
+ const raw=norm([job.workType,job.type,job.jobType,job.employmentType,job.tipo_empleo,job.mode].filter(Boolean).join(' '));
+ const text=getJobText(job);
+ if(/medio tiempo|part time|part-time|jornada parcial/.test(raw+' '+text)) return 'medio tiempo';
+ if(/practica|practicante|internship|becario/.test(raw+' '+text)) return 'prácticas';
+ if(/temporal|por campaña|campana|contrato a plazo fijo|plazo determinado|proyecto temporal/.test(raw+' '+text)) return 'temporal';
+ if(/freelance|por recibo|independiente/.test(raw+' '+text)) return 'freelance';
+ if(/jornada completa|tiempo completo|full time|full-time/.test(raw)) return 'tiempo completo';
+ return raw;
+}
+function getJobMode(job){
+ const explicit=norm([job.modality,job.workMode,job.work_mode,job.modalidad].filter(Boolean).join(' '));
+ const text=getJobText(job);
+ if(/remoto|remote|teletrabajo|desde casa|home office/.test(explicit+' '+text)) return 'remoto';
+ if(/hibrido|hybrid/.test(explicit+' '+text)) return 'híbrido';
+ if(/presencial|en sitio|on site|en oficina/.test(explicit+' '+text)) return 'presencial';
+ return '';
+}
+
 function populateCategories(){
- const cats=[...new Set(jobs.map(j=>j.category).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
+ const categoryMap=new Map();
+ jobs.forEach(j=>{
+   const label=String(j.category||'').trim();
+   if(label){
+     const key=categoryKey(label);
+     if(!categoryMap.has(key)) categoryMap.set(key,label);
+   }
+ });
+ const cats=[...categoryMap.values()].sort((a,b)=>a.localeCompare(b,'es'));
  categorySelect.innerHTML='<option value="">Todas las categorías</option>'+cats.map(c=>`<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
 }
 function populateEmploymentTypes(){
@@ -161,21 +193,22 @@ function isNew(job){
 function filteredJobs(){
  const q=norm(keyword.value.trim());
  const loc=norm(locationSelect.value);
- const cat=norm(categorySelect.value);
+ const cat=categoryKey(categorySelect.value);
  const employmentType=norm(employmentTypeSelect.value);
  const mode=norm(modeSelect.value);
  const company=norm(companyInput.value.trim());
  let list=jobs.filter(job=>{
    const title=norm((job.title||'')+' '+(job.description||''));
-   const where=norm((job.location||'')+' '+(job.mode||''));
+   const where=norm((job.location||'')+' '+getJobMode(job));
    const companyText=norm(job.company||'');
-   const category=norm(job.category||'');
-   const type=norm(job.type||job.jobType||job.employmentType||job.tipo_empleo||job.mode||'');
+   const category=categoryKey(job.category||'');
+   const type=norm(getEmploymentType(job));
+   const jobMode=norm(getJobMode(job));
    return (!q||title.includes(q)||companyText.includes(q)||category.includes(q))
-     &&(!loc||where.includes(loc)||(loc==='remoto'&&where.includes('remot')))
+     &&(!loc||norm(job.location||'').includes(loc)||(loc==='remoto'&&jobMode.includes('remot')))
      &&(!cat||category===cat)
-     &&(!employmentType||type.includes(employmentType))
-     &&(!mode||where.includes(mode)||(mode==='remoto'&&where.includes('remot'))||(mode==='hibrido'&&where.includes('hibrid')))
+     &&(!employmentType||type.includes(employmentType)||title.includes(employmentType))
+     &&(!mode||jobMode===mode||(mode==='remoto'&&jobMode.includes('remot'))||(mode==='hibrido'&&jobMode.includes('hibrid')))
      &&(!company||companyText.includes(company));
  });
  if(sortSelect.value==='title') list.sort((a,b)=>String(a.title||'').localeCompare(String(b.title||''),'es'));
@@ -192,7 +225,7 @@ function renderJobs(reset=true){
    return `<article class="job${fresh?' new-job':''}">
   <div class="job-top"><div class="badge-group"><span class="source">${escapeHtml(job.source||'Portal de empleo')}</span><span class="badge">${escapeHtml(job.category||'Oportunidad laboral')}</span>${fresh?'<span class="new-badge">NUEVA</span>':''}</div></div>
   <h3>${escapeHtml(job.title)}</h3><div class="company">${escapeHtml(job.company||'Empresa por confirmar')}</div>
-  <div class="meta"><span>📍 ${escapeHtml(job.location||'Perú')}</span><span>${norm(job.mode).includes('remot')?'🏠':'🏢'} ${escapeHtml(job.mode||job.type||'Ver modalidad')}</span>${job.salary?`<span>💰 ${escapeHtml(job.salary)}</span>`:''}</div>
+  <div class="meta"><span>📍 ${escapeHtml(job.location||'Perú')}</span><span>${getJobMode(job)==='remoto'?'🏠 ':getJobMode(job)==='híbrido'?'🔄 ':getJobMode(job)==='presencial'?'🏢 ':''}${escapeHtml(getJobMode(job)||getEmploymentType(job)||'Modalidad no especificada')}</span>${job.salary?`<span>💰 ${escapeHtml(job.salary)}</span>`:''}</div>
   <p>${formatJobDescription(job.description||'Revisa los requisitos y condiciones en el anuncio original.')}</p>
   <div class="job-bottom"><small>${escapeHtml(job.source||'Fuente externa')}</small><a class="apply" href="${escapeHtml(job.url||job.link||'#')}" target="_blank" rel="noopener noreferrer">Ver anuncio ↗</a></div>
  </article>`;
@@ -224,7 +257,8 @@ async function loadJobs(){
      url:j.url||j.link||j.applyUrl||'#',
      source:j.source||j.sourceName||'Portal de empleo',
      category:j.category||j.categoria||'Oportunidad laboral',
-     mode:j.mode||j.modality||j.type||'Ver modalidad'
+     workType:j.workType||j.type||j.jobType||j.employmentType||j.tipo_empleo||j.mode||'',
+     mode:j.modality||j.workMode||j.work_mode||j.modalidad||''
    }));
    populateCategories();
    const date=data.updated?new Date(data.updated+'T12:00:00'):null;
@@ -238,7 +272,8 @@ async function loadJobs(){
  }
 }
 form.addEventListener('submit',e=>{e.preventDefault();renderJobs();document.getElementById('ofertas').scrollIntoView({behavior:'smooth'});});
-[keyword,locationSelect,categorySelect,modeSelect,companyInput,sortSelect].forEach(el=>el.addEventListener('input',()=>renderJobs()));
+[keyword,companyInput].forEach(el=>el.addEventListener('input',()=>renderJobs()));
+[locationSelect,categorySelect,employmentTypeSelect,modeSelect,sortSelect].forEach(el=>el.addEventListener('change',()=>renderJobs()));
 loadMoreButton.addEventListener('click',()=>{visibleCount+=PAGE_SIZE;renderJobs(false);});
 loadJobs();
 </script>
