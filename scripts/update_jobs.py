@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parent.parent
 JOBS_FILE = ROOT / 'jobs.json'
 API_KEY = os.environ.get('JOOBLE_API_KEY', '').strip()
 ENDPOINT = 'https://pe.jooble.org/api/'
-RESULTS_PER_QUERY = 50
+RESULTS_PER_QUERY = 40
 MAX_SAVED = 200
 
 # Four queries per run = up to 200 results. The groups rotate by weekday so
@@ -71,7 +71,11 @@ if not API_KEY:
 # every day while still refreshing the whole portal over time.
 day_number = datetime.now(timezone.utc).day
 group_index = (day_number - 1) % len(QUERY_GROUPS)
-queries = QUERY_GROUPS[group_index]
+queries = [
+    ('trabajo remoto', 'Trabajo remoto'),
+    ('trabajo híbrido', 'Empleo híbrido'),
+    *QUERY_GROUPS[group_index][:3],
+]
 
 
 def classify(title: str, fallback: str) -> str:
@@ -99,6 +103,30 @@ def classify(title: str, fallback: str) -> str:
             return category
     return fallback or 'Empleo general'
 
+
+
+def classify_mode(title: str, raw_type: str, description: str, query: str) -> str:
+    # Only label a modality when the offer text contains an explicit signal.
+    text = ' '.join((title, raw_type, description)).casefold()
+    if any(term in text for term in (
+        'trabajo remoto', 'empleo remoto', 'puesto remoto', 'modalidad remota',
+        'modalidad: remoto', 'modalidad remoto', 'teletrabajo', 'home office',
+        'desde casa', '100% remoto', '100 % remoto',
+    )):
+        return 'Remoto'
+    if any(term in text for term in (
+        'trabajo híbrido', 'trabajo hibrido', 'empleo híbrido', 'empleo hibrido',
+        'modalidad híbrida', 'modalidad hibrida', 'modalidad: híbrido',
+        'modalidad: hibrido', 'híbrido', 'hibrido',
+    )):
+        return 'Híbrido'
+    if any(term in text for term in (
+        'modalidad presencial', 'modalidad: presencial', 'trabajo presencial',
+        'empleo presencial', '100% presencial', '100 % presencial',
+        'presencial en',
+    )):
+        return 'Presencial'
+    return 'No especificada'
 
 def fetch(query: str):
     payload = {
@@ -145,7 +173,7 @@ for query, fallback_category in queries:
                 'title': title,
                 'company': (raw.get('company') or 'Empresa por confirmar').strip(),
                 'location': loc,
-                'mode': (raw.get('type') or 'Ver modalidad').strip(),
+                'mode': classify_mode(title, (raw.get('type') or '').strip(), (raw.get('snippet') or '').strip(), query),
                 'category': classify(title, fallback_category),
                 'source': (raw.get('source') or 'Jooble').strip(),
                 'extra': f'Actualización de Jooble · búsqueda: {query}',
