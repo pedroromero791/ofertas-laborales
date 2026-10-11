@@ -1,6 +1,34 @@
 {
   "updated": "2026-10-11",
-  "source": "Gob.pe — publicaciones oficiales",
-  "count": 0,
-  "convocatorias": []
+  "source": "Gob.pe y portales institucionales oficiales",
+  "count": 3,
+  "convocatorias": [
+    {
+      "title": "[P.S. 018-2026-MIDIS-PNPDS] – SERVICIOS DE UN (01) GESTOR SOCIAL PARA LA UNIDAD TERRITORIAL DE CAJAMARCA",
+      "institution": "Programa Contigo",
+      "location": "CAJAMARCA",
+      "published": "",
+      "url": "https://contigo.gob.pe/jobs/p-s-018-2026-midis-pnpds-servicios-de-un-01-gestor-social-para-la-unidad-territorial-de-cajamarca",
+      "source": "Programa Contigo",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "[P.S. 017-2026-MIDIS-PNPDS] – SERVICIOS DE UN (01) ASISTENTE ADMINISTRATIVO PARA LA UNIDAD DE PLANEAMIENTO PRESUPUESTO Y MODERNIZACIÓN",
+      "institution": "Programa Contigo",
+      "location": "Lima",
+      "published": "",
+      "url": "https://contigo.gob.pe/jobs/p-s-017-2026-midis-pnpds",
+      "source": "Programa Contigo",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "2026-016-APN — ASISTENTE EN SOPORTE INFORMATICO 2",
+      "institution": "Autoridad Portuaria Nacional",
+      "location": "Perú",
+      "published": "",
+      "url": "https://reclutamiento.apn.gob.pe/convocatorias-cas/?modalidad=cas",
+      "source": "Autoridad Portuaria Nacional",
+      "status": "Verificar vigencia en la fuente oficial"
+    }
+  ]
 }
