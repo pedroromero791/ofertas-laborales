@@ -168,16 +168,61 @@ def scrape_sunat(session, results, errors):
         response = session.get(base, timeout=25)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
+        # SUNAT lists its current opportunities in a "Nuevas Convocatorias"
+        # block. Capture the linked title and surrounding card, not just the
+        # anchor text (which varies between desktop/mobile markup).
         for a in soup.select("a[href]"):
             title = clean(a.get_text(" ", strip=True))
-            if not re.search(r"\bCAS\s*(?:N[º°.]?\s*)?\d+\s*[-–]\s*2026\b", title, re.I):
+            card = a
+            for _ in range(3):
+                if card.parent:
+                    card = card.parent
+            context = clean(card.get_text(" ", strip=True))
+            combined = title + " " + context
+            if not re.search(r"\bCAS\s*(?:N[º°.]?\s*)?\d+\s*[-–]\s*2026\b", combined, re.I):
+                continue
+            if re.search(r"\b(cerrada|finalizada|culminada|cancelada|desierta)\b", combined, re.I):
                 continue
             url = normalize_url(a.get("href"), base)
             if urlparse(url).netloc not in ("sunat.gob.pe", "www.sunat.gob.pe", "unete.sunat.gob.pe"):
                 continue
-            add_result(results, title, url, "SUNAT", "SUNAT", context=title)
+            if len(title) < 12:
+                title_match = re.search(r"(CAS\s*(?:N[º°.]?\s*)?\d+\s*[-–]\s*2026\s*\|?\s*[^|]+)", combined, re.I)
+                title = clean(title_match.group(1)) if title_match else title
+            add_result(results, title, url, "SUNAT", "SUNAT", context=context)
     except Exception as exc:
         errors.append(f"SUNAT: {exc}")
+
+
+def scrape_defensoria(session, results, errors):
+    base = "https://www.defensoria.gob.pe/convocatorias/convocatorias-ant.php"
+    try:
+        response = session.get(base, timeout=25)
+        response.raise_for_status()
+        soup = BeautifulSoup(response.text, "html.parser")
+        for a in soup.select("a[href]"):
+            title = clean(a.get_text(" ", strip=True))
+            if not title or len(title) < 12:
+                continue
+            card = a
+            for _ in range(3):
+                if card.parent:
+                    card = card.parent
+            context = clean(card.get_text(" ", strip=True))
+            combined = title + " " + context
+            # Only include links that clearly refer to a 2026 hiring process.
+            if not re.search(r"(?:CAS|convocatoria|proceso de selección|proceso de seleccion|prácticas|practicas)", combined, re.I):
+                continue
+            if not re.search(r"2026", combined, re.I):
+                continue
+            if re.search(r"\b(cerrado|culminado|concluido|cancelado|desierto|finalizado)\b", combined, re.I):
+                continue
+            url = normalize_url(a.get("href"), base)
+            if urlparse(url).netloc not in ("defensoria.gob.pe", "www.defensoria.gob.pe"):
+                continue
+            add_result(results, title, url, "Defensoría del Pueblo", "Defensoría del Pueblo", context=combined)
+    except Exception as exc:
+        errors.append(f"Defensoría del Pueblo: {exc}")
 
 
 def main():
@@ -190,6 +235,7 @@ def main():
     scrape_contigo(session, results, errors)
     scrape_apn(session, results, errors)
     scrape_sunat(session, results, errors)
+    scrape_defensoria(session, results, errors)
 
     items = sorted(results.values(), key=lambda item: item.get("published", ""), reverse=True)[:60]
     if not items:
