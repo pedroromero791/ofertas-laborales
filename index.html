@@ -149,8 +149,33 @@ function populateCategories(){
  const cats=[...new Set(jobs.map(j=>j.category).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
  categorySelect.innerHTML='<option value="">Todas las categorías</option>'+cats.map(c=>`<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
 }
+function inferredProfession(job){
+ const explicit=job.profession||job.profesion;
+ if(explicit) return explicit;
+ const text=norm([job.title,job.description,job.category,job.area,job.sector].join(' '));
+ const groups=[
+  ['Administración',['administrador','administrativa','administrativo','asistente administrativo','oficina','secretaria','recepcionista','auxiliar administrativo']],
+  ['Contabilidad y Finanzas',['contador','contabilidad','contable','finanzas','tesoreria','tesorero','cobranzas','facturacion']],
+  ['Ventas y Comercial',['ventas','vendedor','asesor comercial','ejecutivo comercial','promotor','comercial']],
+  ['Atención al Cliente',['atencion al cliente','servicio al cliente','call center','teleoperador']],
+  ['Marketing y Diseño',['marketing','mercadeo','publicidad','community manager','diseñador','diseño grafico','contenido']],
+  ['Tecnología e Informática',['programador','desarrollador','software','sistemas','informatica','soporte tecnico','it ','data analyst','base de datos']],
+  ['Ingeniería',['ingeniero','ingenieria','civil','industrial','mecanica','electrica','electronica','minas','ambiental']],
+  ['Construcción y Mantenimiento',['construccion','albanil','obra','carpintero','electricista','gasfitero','mantenimiento']],
+  ['Logística y Almacén',['logistica','almacen','almacenero','inventario','compras','despacho','distribucion']],
+  ['Producción y Operaciones',['produccion','operario','manufactura','planta','operaciones','auxiliar de produccion']],
+  ['Salud',['medico','enfermero','enfermera','tecnico de enfermeria','odontologo','farmacia','salud','laboratorio']],
+  ['Educación',['docente','profesor','profesora','maestro','educacion','capacitador','tutor']],
+  ['Recursos Humanos',['recursos humanos','rrhh','reclutamiento','seleccion de personal','talento humano']],
+  ['Hotelería y Gastronomía',['cocinero','cocina','chef','mesero','mozo','hotel','hoteleria','restaurante','gastronomia']],
+  ['Transporte y Conducción',['conductor','chofer','motorizado','transporte','reparto']],
+  ['Seguridad',['seguridad','vigilante','agente de seguridad','prevencionista']]
+ ];
+ for(const [name,words] of groups) if(words.some(w=>text.includes(w))) return name;
+ return job.category||job.area||job.sector||'Otros';
+}
 function populateProfessions(){
- const values=[...new Set(jobs.map(j=>j.profession||j.profesion||j.area||j.category).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
+ const values=[...new Set(jobs.map(inferredProfession).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
  professionSelect.innerHTML='<option value="">Todas las profesiones</option>'+values.map(v=>`<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('');
 }
 function populateEmploymentTypes(){
@@ -181,7 +206,7 @@ function filteredJobs(){
    const companyText=norm(job.company||'');
    const category=norm(job.category||'');
    const type=norm(job.type||job.jobType||job.employmentType||job.tipo_empleo||job.mode||'');
-   const professionText=norm(job.profession||job.profesion||job.area||job.category||'');
+   const professionText=norm(inferredProfession(job));
    return (!q||title.includes(q)||companyText.includes(q)||category.includes(q))
      &&(!loc||where.includes(loc)||(loc==='remoto'&&where.includes('remot')))
      &&(!cat||category===cat)
