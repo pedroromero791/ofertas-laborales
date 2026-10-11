@@ -156,35 +156,41 @@ function getEmploymentType(job){
  return raw;
 }
 function getJobMode(job){
- const explicit=norm([job.modality,job.workMode,job.work_mode,job.modalidad].filter(Boolean).join(' '));
+ const explicit=norm([job.modality,job.workMode,job.work_mode,job.modalidad,job.mode].filter(Boolean).join(' '));
  const title=norm(job.title||'');
  const description=norm(job.description||'');
+ const location=norm(job.location||'');
  const text=title+' '+description;
 
- // Si la fuente entrega una modalidad explícita, tiene prioridad.
- if(explicit){
-   if(/\b(hibrid|hybrid)\b/.test(explicit)) return 'híbrido';
-   if(/\b(remot|remote|teletrabaj|home office|work from home|wfh)\b/.test(explicit)) return 'remoto';
-   if(/\b(presencial|on[- ]?site|onsite)\b/.test(explicit)) return 'presencial';
- }
+ // Campos explícitos: si la fuente trae una modalidad clara, usarla.
+ if(/\b(hibrid|hybrid)(o|a)?\b/.test(explicit)) return 'híbrido';
+ if(/\b(remot|remote)(o|a)?\b|teletrabaj|home office|work from home|\bwfh\b/.test(explicit)) return 'remoto';
+ if(/\bpresencial\b|\bon[- ]?site\b|\bonsite\b/.test(explicit)) return 'presencial';
 
- // Híbrido primero.
- if(/\b(?:modalidad|trabajo|puesto|empleo|posicion|cargo)\b.{0,35}\b(?:hibrid|hybrid)[oa]?\b/.test(text)
-   || /\b(?:hibrid|hybrid)[oa]?\b.{0,35}\b(?:remot|remote|presencial)\b/.test(text)
-   || /\b(?:remot|remote|presencial)\b.{0,35}\b(?:hibrid|hybrid)[oa]?\b/.test(text)) return 'híbrido';
+ // La ubicación "Remoto" es una señal directa.
+ if(/\b(remoto|remota|remote)\b/.test(location)) return 'remoto';
 
- // Remoto: varias formas habituales, pero sin asumirlo por una mención aislada.
- if(/\b(?:trabajo|modalidad|puesto|empleo|posicion|cargo)\b.{0,35}\b(?:100\s*%\s*)?(?:remot|remote)[oa]?\b/.test(text)
-   || /\b(?:100\s*%\s*)?(?:remot|remote)[oa]?\b/.test(title)
-   || /\b(?:teletrabajo|home office|work from home|wfh)\b/.test(text)
-   || /\btrabaj(?:ar|o)\s+desde\s+casa\b/.test(text)
-   || /\bdesde casa\b/.test(text)) return 'remoto';
+ // Híbrido: priorizarlo antes de remoto/presencial.
+ if(/\b(hibrid[oa]?|hybrid)\b/.test(title)) return 'híbrido';
+ if(/\b(modalidad|trabajo|puesto|empleo|posicion|cargo)\b[^.]{0,80}\b(hibrid[oa]?|hybrid)\b/.test(text)) return 'híbrido';
+ if(/\b(hibrid[oa]?|hybrid)\b/.test(text)) return 'híbrido';
+ if(/\b(remot[oa]?|remote)\b[^.]{0,80}\b(presencial|presencialmente|oficina|sede)\b/.test(text)
+   || /\b(presencial|presencialmente|oficina|sede)\b[^.]{0,80}\b(remot[oa]?|remote)\b/.test(text)) return 'híbrido';
 
- // Presencial: no usamos ubicación, oficina aislada ni jornada completa como prueba.
- if(/\b(?:modalidad|trabajo|puesto|empleo|posicion|cargo)\b.{0,35}\bpresencial\b/.test(text)
-   || /\btrabajo presencial\b/.test(text)
-   || /\bpresencial\s+(?:en|desde)\s+(?:oficina|sede|planta)\b/.test(text)
-   || /\b(?:on[- ]?site|onsite)\b/.test(text)) return 'presencial';
+ // Remoto: aceptar señales claras incluso si la frase no empieza por "trabajo".
+ if(/\b(remot[oa]?|remote)\b/.test(title)) return 'remoto';
+ if(/\b(teletrabajo|teletrabajar|home office|work from home|wfh)\b/.test(text)) return 'remoto';
+ if(/\b(100\s*%|100\s*por\s*ciento)\s*remot[oa]?\b/.test(text)) return 'remoto';
+ if(/\bmodalidad\s*[:\-]?\s*remot[oa]?\b/.test(text)) return 'remoto';
+ if(/\btrabajo\s+(?:completamente\s+|totalmente\s+)?remot[oa]?\b/.test(text)) return 'remoto';
+ if(/\bremot[oa]?\s+(?:de\s+forma\s+)?(?:permanente|exclusiv[oa])\b/.test(text)) return 'remoto';
+ if(/\bdesde\s+casa\b|\btrabaj(?:ar|o)\s+desde\s+casa\b/.test(text)) return 'remoto';
+
+ // Presencial: solo con evidencia textual clara; nunca por "jornada completa" ni por ciudad.
+ if(/\bpresencial\b/.test(title)) return 'presencial';
+ if(/\bmodalidad\s*[:\-]?\s*presencial\b/.test(text)) return 'presencial';
+ if(/\btrabajo\s+presencial\b|\bpresencial\s+(?:en|desde)\s+(?:oficina|sede|planta)\b/.test(text)) return 'presencial';
+ if(/\b(on[- ]?site|onsite)\b/.test(text)) return 'presencial';
 
  return 'no especificada';
 }
