@@ -1,0 +1,40 @@
+name: Actualizar convocatorias del Estado
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '47 13 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: actualizar-convocatorias
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar dependencias
+        run: pip install requests beautifulsoup4
+      - name: Recopilar publicaciones oficiales
+        run: python scripts/update_state_jobs.py
+      - name: Guardar cambios
+        run: |
+          if ! git diff --quiet -- convocatorias.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add convocatorias.json
+            git commit -m "Actualizar convocatorias del Estado"
+            git push
+          else
+            echo "No hay cambios en convocatorias.json"
+          fi
