@@ -63,7 +63,7 @@ function formatJobDescription(value){
       </label>
       <label class="field" aria-label="Ubicación">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
-        <select id="location"><option value="">Todo el Perú</option><option>Lima</option><option>Callao</option><option>Arequipa</option><option>Áncash</option><option>Trujillo</option><option>Remoto</option></select>
+        <select id="location"><option value="">Todo el Perú</option></select>
       </label>
       <button type="submit">Buscar ofertas →</button>
     </form>
@@ -207,6 +207,20 @@ function populateCategories(){
  const cats=[...categoryMap.values()].sort((a,b)=>a.localeCompare(b,'es'));
  categorySelect.innerHTML='<option value="">Todas las categorías</option>'+cats.map(c=>`<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
 }
+function populateLocations(){
+ const previous=locationSelect.value;
+ const locations=new Map();
+ jobs.forEach(job=>{
+   const raw=String(job.location||'').trim();
+   if(!raw || norm(raw)==='peru') return;
+   const key=norm(raw);
+   if(!locations.has(key)) locations.set(key,raw);
+ });
+ const values=[...locations.values()].sort((a,b)=>a.localeCompare(b,'es'));
+ locationSelect.innerHTML='<option value="">Todo el Perú</option>'+values.map(v=>`<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('');
+ const match=values.find(v=>norm(v)===norm(previous));
+ if(match) locationSelect.value=match;
+}
 function populateEmploymentTypes(){
  const values=[...new Set(jobs.map(j=>j.type||j.jobType||j.employmentType||j.tipo_empleo).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
  values.forEach(v=>{
@@ -298,6 +312,7 @@ async function loadJobs(){
      mode:j.modality||j.workMode||j.work_mode||j.modalidad||''
    }));
    populateCategories();
+   populateLocations();
    if(typeof populateEmploymentTypes==='function') populateEmploymentTypes();
    const date=data.updated?new Date(data.updated+'T12:00:00'):null;
    document.getElementById('fresh').textContent=date&&!isNaN(date)?'Actualizado · '+date.toLocaleDateString('es-PE',{day:'numeric',month:'short',year:'numeric'}):'Ofertas destacadas';
