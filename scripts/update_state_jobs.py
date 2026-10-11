@@ -34,7 +34,7 @@ HEADERS = {
 TERMS = (
     "convocatoria", "proceso de selección", "proceso de seleccion",
     "prácticas", "practicas", "concurso público", "concurso publico",
-    "oferta laboral", "cas ", "cas-", "p.s.",
+    "oferta laboral", "vigente", "cas ", "cas-", "p.s.",
 )
 CLOSED = ("culminado", "concluido", "terminado", "cancelado", "desierto", "finalizado", "no vigente")
 
