@@ -156,11 +156,29 @@ function getEmploymentType(job){
  return raw;
 }
 function getJobMode(job){
+ // 1) Si la fuente entrega una modalidad explícita, usamos ese dato primero.
  const explicit=norm([job.modality,job.workMode,job.work_mode,job.modalidad].filter(Boolean).join(' '));
- const text=getJobText(job);
- if(/remoto|remote|teletrabajo|desde casa|home office/.test(explicit+' '+text)) return 'remoto';
- if(/hibrido|hybrid/.test(explicit+' '+text)) return 'híbrido';
- if(/presencial|en sitio|on site|en oficina/.test(explicit+' '+text)) return 'presencial';
+ if(explicit){
+   if(/hibrid|hybrid/.test(explicit)) return 'híbrido';
+   if(/remot|remote|teletrabaj|home office|desde casa/.test(explicit)) return 'remoto';
+   if(/presencial|on site|en sitio|en oficina|en sede/.test(explicit)) return 'presencial';
+ }
+
+ // 2) Si no hay campo explícito, solo clasificamos cuando el texto da
+ // una señal clara de modalidad. No basta con que aparezca la palabra
+ // "remoto" o "presencial" en cualquier parte de la descripción.
+ const title=norm(job.title||'');
+ const description=norm(job.description||'');
+ const text=title+' '+description;
+
+ // Híbrido primero para evitar que una oferta híbrida que también menciona
+ // trabajo remoto sea clasificada incorrectamente como 100% remota.
+ if(/modalidad(?: de trabajo)?[:\s-]*(hibrid|hybrid)|trabajo (?:en modalidad )?hibrid|modalidad hibrid|puesto hibrid|empleo hibrid/.test(text)) return 'híbrido';
+
+ if(/(?:modalidad(?: de trabajo)?|trabajo|puesto|empleo|posicion|cargo)[:\s-]*(remot|remote)|trabajo remoto|trabajo 100 ?% remoto|100 ?% remoto|modalidad remota|teletrabajo|home office|desde casa|remoto de forma permanente/.test(text)) return 'remoto';
+
+ if(/(?:modalidad(?: de trabajo)?|trabajo|puesto|empleo|posicion|cargo)[:\s-]*(presencial)|trabajo presencial|modalidad presencial|presencial en (?:oficina|sede|planta)|en oficina|en sede|en planta|on site|en sitio/.test(text)) return 'presencial';
+
  return '';
 }
 
@@ -225,7 +243,7 @@ function renderJobs(reset=true){
    return `<article class="job${fresh?' new-job':''}">
   <div class="job-top"><div class="badge-group"><span class="source">${escapeHtml(job.source||'Portal de empleo')}</span><span class="badge">${escapeHtml(job.category||'Oportunidad laboral')}</span>${fresh?'<span class="new-badge">NUEVA</span>':''}</div></div>
   <h3>${escapeHtml(job.title)}</h3><div class="company">${escapeHtml(job.company||'Empresa por confirmar')}</div>
-  <div class="meta"><span>📍 ${escapeHtml(job.location||'Perú')}</span><span>${getJobMode(job)==='remoto'?'🏠 ':getJobMode(job)==='híbrido'?'🔄 ':getJobMode(job)==='presencial'?'🏢 ':''}${escapeHtml(getJobMode(job)||getEmploymentType(job)||'Modalidad no especificada')}</span>${job.salary?`<span>💰 ${escapeHtml(job.salary)}</span>`:''}</div>
+  <div class="meta"><span>📍 ${escapeHtml(job.location||'Perú')}</span><span>${getJobMode(job)==='remoto'?'🏠 ':getJobMode(job)==='híbrido'?'🔄 ':getJobMode(job)==='presencial'?'🏢 ':''}${escapeHtml(getJobMode(job)||'Modalidad no especificada')}</span>${job.salary?`<span>💰 ${escapeHtml(job.salary)}</span>`:''}</div>
   <p>${formatJobDescription(job.description||'Revisa los requisitos y condiciones en el anuncio original.')}</p>
   <div class="job-bottom"><small>${escapeHtml(job.source||'Fuente externa')}</small><a class="apply" href="${escapeHtml(job.url||job.link||'#')}" target="_blank" rel="noopener noreferrer">Ver anuncio ↗</a></div>
  </article>`;
