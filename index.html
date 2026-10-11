@@ -1,1 +1,322 @@
 <!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EmpleosPerú.tech | Encuentra trabajo en Perú</title>
+<meta name="description" content="Explora oportunidades laborales en Perú y postula desde los portales de empleo originales. Busca por puesto y ubicación.">
+<meta name="theme-color" content="#101828">
+<style>
+:root{--navy:#101828;--navy2:#172b4d;--orange:#f59e0b;--ink:#172033;--muted:#667085;--line:#e5eaf1;--bg:#f6f8fb;--white:#fff;--green:#138a55}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5}a{color:inherit}header{background:var(--navy);color:white;padding:17px max(5%,calc((100% - 1180px)/2));display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{font-size:23px;font-weight:850;letter-spacing:-.8px;text-decoration:none}.brand span{color:var(--orange)}nav{display:flex;gap:23px;align-items:center}nav a{font-size:14px;color:#d8e0ec;text-decoration:none}nav a:hover{color:#fff}.nav-cta{background:var(--orange);color:#172033!important;padding:10px 14px;border-radius:9px;font-weight:800}
+.hero{background:radial-gradient(ellipse at 80% 10%,#29466b 0,transparent 40%),linear-gradient(120deg,#101828,#172b4d);color:white;padding:66px 5% 78px}.hero-inner{max-width:1100px;margin:auto}.eyebrow{display:inline-flex;align-items:center;gap:8px;color:#ffe0a3;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}.dot{height:8px;width:8px;border-radius:50%;background:#34d399}.hero h1{font-size:clamp(34px,5vw,58px);line-height:1.07;letter-spacing:-1.8px;max-width:760px;margin:18px 0}.hero h1 span{color:#ffbd4a}.hero p{max-width:660px;color:#d4deeb;font-size:17px;margin:0 0 28px}.search-box{background:white;padding:9px;border-radius:14px;box-shadow:0 18px 45px #0003;display:grid;grid-template-columns:1.6fr 1fr auto;gap:8px;max-width:950px}.field{display:flex;align-items:center;gap:10px;padding:0 13px;border:1px solid #edf0f5;border-radius:9px;min-width:0}.field svg{flex:0 0 19px;color:#8a94a6}.field input,.field select{border:0;outline:0;background:transparent;width:100%;min-width:0;padding:14px 0;font-size:14px;color:var(--ink)}button,.button{border:0;border-radius:9px;background:var(--orange);color:#172033;padding:14px 21px;font-weight:850;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:14px}.button:hover,button:hover{filter:brightness(.96)}.advanced-filters{max-width:1100px;margin:12px auto 0;display:grid;grid-template-columns:1.05fr 1.05fr 1.1fr 1.05fr 1fr;gap:8px}.advanced-filters .field{background:#fff;min-height:46px}.advanced-filters .field select,.advanced-filters .field input{font-size:13px}.filter-reset{background:#fff;color:#172033;border:1px solid #e4e7ec}.job.new-job{border-color:#b7e4cb;box-shadow:0 8px 24px #138a5510}.new-badge{font-size:11px;color:#13744b;background:#dff7e9;border-radius:6px;padding:6px 8px;font-weight:900}.job-top .badge-group{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.hero-note{font-size:12px!important;color:#b9c6d8!important;margin:13px 0 0!important}
+main{max-width:1180px;width:90%;margin:0 auto}.quick-links{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:-28px 0 44px;position:relative}.quick-link{background:white;border:1px solid var(--line);border-radius:13px;padding:17px;box-shadow:0 8px 24px #14233b0a;text-decoration:none;display:flex;align-items:center;gap:12px}.quick-link:hover{border-color:#f5bd5a;transform:translateY(-2px)}.q-icon{height:43px;width:43px;border-radius:11px;background:#fff3d9;display:grid;place-items:center;font-size:21px;flex-shrink:0}.quick-link strong{display:block;font-size:14px}.quick-link small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin:0 0 20px}.section-head h2{font-size:27px;letter-spacing:-.7px;margin:0}.section-head p{color:var(--muted);font-size:14px;margin:5px 0 0}.fresh{font-size:12px;color:var(--green);font-weight:800;background:#e8f7ef;padding:7px 10px;border-radius:20px;white-space:nowrap}
+.jobs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}.job{background:white;border:1px solid var(--line);border-radius:15px;padding:22px;display:flex;flex-direction:column;min-height:330px;transition:.18s}.job:hover{box-shadow:0 12px 28px #14233b12;transform:translateY(-3px)}.job-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:18px}.source{font-size:11px;font-weight:850;color:#344054;background:#f0f3f8;border-radius:6px;padding:6px 8px}.badge{font-size:11px;color:#16714a;background:#e8f7ef;border-radius:6px;padding:6px 8px;font-weight:800}.job h3{font-size:19px;line-height:1.28;margin:0 0 8px;letter-spacing:-.3px}.company{font-weight:750;font-size:14px;margin-bottom:12px}.meta{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:13px}.meta span{font-size:12px;color:#475467;background:#f7f8fa;border:1px solid #edf0f4;border-radius:6px;padding:5px 8px}.job p{font-size:13px;color:#667085;margin:0 0 18px}.job-bottom{margin-top:auto;border-top:1px solid #eef0f4;padding-top:16px;display:flex;align-items:center;justify-content:space-between;gap:8px}.job-bottom small{font-size:11px;color:#98a2b3}.apply{font-size:13px;padding:10px 13px;background:var(--navy);color:white;border-radius:8px;text-decoration:none;font-weight:800;white-space:nowrap}.apply:hover{background:#25456f}.empty{display:none;background:white;padding:30px;text-align:center;border:1px solid var(--line);border-radius:14px;color:var(--muted)}.results-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 16px;color:var(--muted);font-size:13px}.results-bar strong{color:var(--ink)}.load-more-wrap{display:flex;justify-content:center;margin:26px 0 0}.load-more{background:#172b4d;color:#fff;min-width:190px}.load-more[hidden]{display:none}
+.disclaimer{margin:17px 0 54px;padding:14px 16px;border:1px solid #f4dfb2;background:#fffaf0;border-radius:10px;color:#7a5b19;font-size:12px}.guides{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:0 0 55px}.guide{background:#fff;border:1px solid var(--line);border-radius:15px;padding:24px}.guide h3{margin:0 0 9px;font-size:18px}.guide p{color:var(--muted);font-size:13px;margin:0 0 15px}.guide a{font-size:13px;font-weight:800;color:#1d4ed8;text-decoration:none}.guide a:hover{text-decoration:underline}.guide ul{padding-left:18px;margin:10px 0 0;color:#667085;font-size:13px}.guide li{margin:6px 0}
+footer{background:var(--navy);color:#c4cede;padding:32px 5%;font-size:12px}footer .foot-inner{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}footer strong{color:white;font-size:16px}footer a{color:#ffe0a3;text-decoration:none}.foot-copy{max-width:660px}
+@media(max-width:900px){.advanced-filters{grid-template-columns:1fr 1fr}.quick-links{grid-template-columns:repeat(2,1fr)}.jobs{grid-template-columns:repeat(2,minmax(0,1fr))}.search-box{grid-template-columns:1fr 1fr}.search-box button{grid-column:1/-1}.nav-cta{display:none}}
+@media(max-width:600px){.advanced-filters{grid-template-columns:1fr}header{padding:15px 5%;flex-direction:column;align-items:flex-start}nav{width:100%;gap:17px;overflow:auto}nav a{white-space:nowrap}.hero{padding:48px 5% 60px}.hero p{font-size:15px}.search-box{grid-template-columns:1fr}.search-box button{grid-column:auto;width:100%}main{width:92%}.quick-links{grid-template-columns:1fr;margin-bottom:38px}.quick-link{padding:13px}.jobs{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}.section-head h2{font-size:24px}.guides{grid-template-columns:1fr}.job{min-height:0}}
+</style>
+
+<script id="description-format-fix">
+function formatJobDescription(value){
+  let s = String(value || '');
+  // Decode entities such as &nbsp;, &amp;, &lt;, etc.
+  s = s.replace(/&(?:nbsp|amp|lt|gt|quot|#39|#x27);/gi, m => {
+    const map = {'&nbsp;':' ','&amp;':'&','&lt;':'<','&gt;':'>','&quot;':'"',"&#39;":"'","&#x27;":"'"};
+    return map[m.toLowerCase()] ?? m;
+  });
+  // Decode once more if the API double-encoded the HTML.
+  s = s.replace(/&(?:nbsp|amp|lt|gt|quot|#39|#x27);/gi, m => {
+    const map = {'&nbsp;':' ','&amp;':'&','&lt;':'<','&gt;':'>','&quot;':'"',"&#39;":"'","&#x27;":"'"};
+    return map[m.toLowerCase()] ?? m;
+  });
+  // Keep only simple formatting tags. Escape everything else.
+  s = s.replace(/<\s*(b|strong)\s*>/gi,'\u0001')
+       .replace(/<\s*\/\s*(b|strong)\s*>/gi,'\u0002')
+       .replace(/<\s*br\s*\/?\s*>/gi,'\n');
+  s = s.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  s = s.replace(/\u0001/g,'<strong>').replace(/\u0002/g,'</strong>');
+  return s.replace(/\n/g,'<br>');
+}
+</script>
+
+</head>
+<body>
+<header>
+  <a class="brand" href="#" aria-label="Empleos Perú inicio">Empleos<span>Perú</span><small style="font-size:11px;color:#aab7c9;margin-left:7px;font-weight:600">.tech</small></a>
+  <nav aria-label="Navegación principal">
+    <a href="#">Inicio</a><a href="#ofertas">Ofertas destacadas</a><a href="#portales">Portales de empleo</a><a href="#consejos">Consejos</a>
+    <a class="nav-cta" href="https://pe.computrabajo.com/offersgrid/search" target="_blank" rel="noopener">Buscar empleo ↗</a>
+  </nav>
+</header>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow"><span class="dot"></span> Oportunidades laborales en Perú</div>
+    <h1>Tu próximo trabajo<br>puede empezar <span>hoy.</span></h1>
+    <p>Encuentra oportunidades laborales y accede a los portales originales para revisar requisitos y postular directamente.</p>
+    <form class="search-box" id="searchForm">
+      <label class="field" aria-label="Puesto o palabra clave">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <input id="keyword" type="search" placeholder="¿Qué trabajo buscas? Ej. asistente, ventas..." autocomplete="off">
+      </label>
+      <label class="field" aria-label="Ubicación">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        <select id="location"><option value="">Todo el Perú</option><option>Lima</option><option>Callao</option><option>Arequipa</option><option>Áncash</option><option>Trujillo</option><option>Remoto</option></select>
+      </label>
+      <button type="submit">Buscar ofertas →</button>
+    </form>
+    <div class="advanced-filters" aria-label="Filtros adicionales">
+      <label class="field" aria-label="Categoría">
+        <span style="font-size:15px">💼</span>
+        <select id="category"><option value="">Todas las categorías</option></select>
+      </label>
+      <label class="field" aria-label="Tipo de empleo">
+        <span style="font-size:15px">⏱️</span>
+        <select id="employmentType">
+          <option value="">Todos los tipos</option>
+          <option value="tiempo completo">Tiempo completo</option>
+          <option value="medio tiempo">Medio tiempo</option>
+          <option value="prácticas">Prácticas</option>
+          <option value="temporal">Temporal</option>
+          <option value="freelance">Freelance</option>
+        </select>
+      </label>
+      <label class="field" aria-label="Modalidad">
+        <span style="font-size:15px">🏠</span>
+        <select id="mode"><option value="">Todas las modalidades</option><option value="presencial">Presencial</option><option value="remoto">Remoto</option><option value="híbrido">Híbrido</option></select>
+      </label>
+      <label class="field" aria-label="Empresa">
+        <span style="font-size:15px">🏢</span>
+        <input id="company" type="search" placeholder="Empresa" autocomplete="off">
+      </label>
+    </div>
+    <p class="hero-note">Las vacantes se cargan automáticamente desde la base de ofertas. Revisa siempre los detalles en el sitio de origen.</p>
+  </div>
+</section>
+<main>
+  <section class="quick-links" id="portales" aria-label="Portales de empleo">
+    <a class="quick-link" href="https://www.empleosperu.gob.pe/" target="_blank" rel="noopener"><span class="q-icon">🇵🇪</span><span><strong>Empleos Perú</strong><small>Portal oficial del MTPE ↗</small></span></a>
+    <a class="quick-link" href="https://pe.computrabajo.com/offersgrid/search" target="_blank" rel="noopener"><span class="q-icon">💼</span><span><strong>Computrabajo</strong><small>Ofertas en todo el país ↗</small></span></a>
+    <a class="quick-link" href="https://www.bumeran.com.pe/" target="_blank" rel="noopener"><span class="q-icon">🔎</span><span><strong>Bumeran</strong><small>Busca por cargo y ciudad ↗</small></span></a>
+    <a class="quick-link" href="https://www.linkedin.com/jobs/" target="_blank" rel="noopener"><span class="q-icon">🤝</span><span><strong>LinkedIn Jobs</strong><small>Vacantes profesionales ↗</small></span></a>
+  </section>
+
+  <section id="ofertas">
+    <div class="section-head">
+      <div><h2>Oportunidades destacadas</h2><p>Vacantes localizadas en portales externos. Confirma que sigan abiertas antes de postular.</p></div>
+      <span class="fresh" id="fresh">Ofertas destacadas</span>
+    </div>
+    <div class="results-bar"><span id="resultsCount">Cargando ofertas…</span><span style="display:flex;align-items:center;gap:8px"><span id="pageInfo">Mostrando hasta 12 por página</span><select id="sort" style="border:1px solid #e5eaf1;border-radius:7px;padding:7px 9px;background:#fff;color:#475467"><option value="new">Más recientes</option><option value="title">A–Z</option><option value="company">Empresa A–Z</option></select></span></div>
+    <div class="jobs" id="jobs" aria-live="polite"></div>
+    <div class="load-more-wrap"><button class="load-more" id="loadMore" type="button" hidden>Ver más ofertas ↓</button></div>
+    <div class="empty" id="empty">No hay ofertas destacadas que coincidan. Prueba otra palabra o revisa los portales externos.</div>
+    <div class="disclaimer"><strong>Importante:</strong> EmpleosPerú.tech es un portal independiente y no es parte del MTPE ni de los portales enlazados. Las vacantes pertenecen a sus respectivas empresas y plataformas; la disponibilidad, remuneración y requisitos pueden cambiar. Nunca pagues por participar en un proceso de selección sin verificar su legitimidad.</div>
+  </section>
+
+  <section class="guides" id="consejos">
+    <article class="guide"><h3>🇵🇪 Busca empleo formal</h3><p>El Ministerio de Trabajo cuenta con un servicio gratuito para buscar vacantes y acceder a orientación laboral.</p><a href="https://www.gob.pe/23475-buscar-trabajo-en-el-portal-empleos-peru" target="_blank" rel="noopener">Cómo buscar trabajo en Empleos Perú ↗</a></article>
+    <article class="guide"><h3>🛡️ Postula con seguridad</h3><p>Antes de enviar tus datos, comprueba el nombre de la empresa, el dominio del correo y los detalles del anuncio.</p><ul><li>No pagues por una entrevista o por asegurar un puesto.</li><li>Lee el contrato y confirma sueldo, horario y modalidad.</li><li>Postula desde el anuncio original.</li></ul></article>
+  </section>
+</main>
+<footer><div class="foot-inner"><div><strong>EmpleosPerú.tech</strong><p>Oportunidades laborales para conectar talento y empleo.</p></div><div class="foot-copy">Este sitio reúne enlaces a publicaciones de terceros para facilitar la búsqueda. No garantiza la vigencia de cada vacante ni participa en los procesos de selección. © 2026 EmpleosPerú.tech</div></div></footer>
+<script>
+const form=document.getElementById('searchForm');
+const keyword=document.getElementById('keyword');
+const locationSelect=document.getElementById('location');
+const categorySelect=document.getElementById('category');
+const employmentTypeSelect=document.getElementById('employmentType');
+const modeSelect=document.getElementById('mode');
+const companyInput=document.getElementById('company');
+const sortSelect=document.getElementById('sort');
+const jobsContainer=document.getElementById('jobs');
+const empty=document.getElementById('empty');
+const loadMoreButton=document.getElementById('loadMore');
+const resultsCount=document.getElementById('resultsCount');
+const pageInfo=document.getElementById('pageInfo');
+const PAGE_SIZE=12;
+window.jobs=[];
+let visibleCount=PAGE_SIZE;
+const escapeHtml=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm=value=>String(value??'').toLocaleLowerCase('es').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim();
+const categoryKey=value=>norm(value).replace(/\s*[\/|>]+\s*/g,'/');
+
+function getJobText(job){
+ return norm([job.title,job.description,job.extra,job.mode,job.modality,job.workMode,job.type,job.jobType,job.employmentType,job.tipo_empleo].filter(Boolean).join(' '));
+}
+function getEmploymentType(job){
+ const raw=norm([job.workType,job.type,job.jobType,job.employmentType,job.tipo_empleo,job.mode].filter(Boolean).join(' '));
+ const text=getJobText(job);
+ if(/medio tiempo|part time|part-time|jornada parcial/.test(raw+' '+text)) return 'medio tiempo';
+ if(/practica|practicante|internship|becario/.test(raw+' '+text)) return 'prácticas';
+ if(/temporal|por campaña|campana|contrato a plazo fijo|plazo determinado|proyecto temporal/.test(raw+' '+text)) return 'temporal';
+ if(/freelance|por recibo|independiente/.test(raw+' '+text)) return 'freelance';
+ if(/jornada completa|tiempo completo|full time|full-time/.test(raw)) return 'tiempo completo';
+ return raw;
+}
+function getJobMode(job){
+ const explicit=norm([job.modality,job.workMode,job.work_mode,job.modalidad,job.mode].filter(Boolean).join(' '));
+ const title=norm(job.title||'');
+ const description=norm(job.description||'');
+ const location=norm(job.location||'');
+ const text=title+' '+description;
+
+ // Campos explícitos: si la fuente trae una modalidad clara, usarla.
+ if(/\b(hibrid|hybrid)(o|a)?\b/.test(explicit)) return 'híbrido';
+ if(/\b(remot|remote)(o|a)?\b|teletrabaj|home office|work from home|\bwfh\b/.test(explicit)) return 'remoto';
+ if(/\bpresencial\b|\bon[- ]?site\b|\bonsite\b/.test(explicit)) return 'presencial';
+
+ // La ubicación "Remoto" es una señal directa.
+ if(/\b(remoto|remota|remote)\b/.test(location)) return 'remoto';
+
+ // Híbrido: priorizarlo antes de remoto/presencial.
+ if(/\b(hibrid[oa]?|hybrid)\b/.test(title)) return 'híbrido';
+ if(/\b(modalidad|trabajo|puesto|empleo|posicion|cargo)\b[^.]{0,80}\b(hibrid[oa]?|hybrid)\b/.test(text)) return 'híbrido';
+ if(/\b(hibrid[oa]?|hybrid)\b/.test(text)) return 'híbrido';
+ if(/\b(remot[oa]?|remote)\b[^.]{0,80}\b(presencial|presencialmente|oficina|sede)\b/.test(text)
+   || /\b(presencial|presencialmente|oficina|sede)\b[^.]{0,80}\b(remot[oa]?|remote)\b/.test(text)) return 'híbrido';
+
+ // Remoto: aceptar señales claras incluso si la frase no empieza por "trabajo".
+ if(/\b(remot[oa]?|remote)\b/.test(title)) return 'remoto';
+ if(/\b(teletrabajo|teletrabajar|home office|work from home|wfh)\b/.test(text)) return 'remoto';
+ if(/\b(100\s*%|100\s*por\s*ciento)\s*remot[oa]?\b/.test(text)) return 'remoto';
+ if(/\bmodalidad\s*[:\-]?\s*remot[oa]?\b/.test(text)) return 'remoto';
+ if(/\btrabajo\s+(?:completamente\s+|totalmente\s+)?remot[oa]?\b/.test(text)) return 'remoto';
+ if(/\bremot[oa]?\s+(?:de\s+forma\s+)?(?:permanente|exclusiv[oa])\b/.test(text)) return 'remoto';
+ if(/\bdesde\s+casa\b|\btrabaj(?:ar|o)\s+desde\s+casa\b/.test(text)) return 'remoto';
+
+ // Presencial: solo con evidencia textual clara; nunca por "jornada completa" ni por ciudad.
+ if(/\bpresencial\b/.test(title)) return 'presencial';
+ if(/\bmodalidad\s*[:\-]?\s*presencial\b/.test(text)) return 'presencial';
+ if(/\btrabajo\s+presencial\b|\bpresencial\s+(?:en|desde)\s+(?:oficina|sede|planta)\b/.test(text)) return 'presencial';
+ if(/\b(on[- ]?site|onsite)\b/.test(text)) return 'presencial';
+
+ // Si no se detecta remoto o híbrido, incluir en presencial por defecto.
+ return 'presencial';
+}
+function populateCategories(){
+ const categoryMap=new Map();
+ jobs.forEach(j=>{
+   const label=String(j.category||'').trim();
+   if(label){
+     const key=categoryKey(label);
+     if(!categoryMap.has(key)) categoryMap.set(key,label);
+   }
+ });
+ const cats=[...categoryMap.values()].sort((a,b)=>a.localeCompare(b,'es'));
+ categorySelect.innerHTML='<option value="">Todas las categorías</option>'+cats.map(c=>`<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+}
+function populateEmploymentTypes(){
+ const values=[...new Set(jobs.map(j=>j.type||j.jobType||j.employmentType||j.tipo_empleo).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
+ values.forEach(v=>{
+   if(![...employmentTypeSelect.options].some(o=>norm(o.value)===norm(v))){
+     employmentTypeSelect.insertAdjacentHTML('beforeend',`<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`);
+   }
+ });
+}
+function isNew(job){
+ const d=job.fetchedAt||job.updatedSource||'';
+ if(!d) return false;
+ const t=Date.parse(d);
+ return !Number.isNaN(t) && (Date.now()-t)<=3*24*60*60*1000;
+}
+function filteredJobs(){
+ const q=norm(keyword.value.trim());
+ const loc=norm(locationSelect.value);
+ const cat=categoryKey(categorySelect.value);
+ const employmentType=norm(employmentTypeSelect.value);
+ const mode=norm(modeSelect.value);
+ const company=norm(companyInput.value.trim());
+ let list=jobs.filter(job=>{
+   const title=norm((job.title||'')+' '+(job.description||''));
+   const where=norm((job.location||'')+' '+getJobMode(job));
+   const companyText=norm(job.company||'');
+   const category=categoryKey(job.category||'');
+   const type=norm(getEmploymentType(job));
+   const jobMode=norm(getJobMode(job));
+   return (!q||title.includes(q)||companyText.includes(q)||category.includes(q))
+     &&(!loc||norm(job.location||'').includes(loc)||(loc==='remoto'&&jobMode.includes('remot')))
+     &&(!cat||category===cat)
+     &&(!employmentType||type.includes(employmentType)||title.includes(employmentType))
+     &&(!mode||jobMode===mode||(mode==='remoto'&&jobMode.includes('remot'))||(mode==='hibrido'&&jobMode.includes('hibrid')))
+     &&(!company||companyText.includes(company));
+ });
+ if(sortSelect.value==='title') list.sort((a,b)=>String(a.title||'').localeCompare(String(b.title||''),'es'));
+ else if(sortSelect.value==='company') list.sort((a,b)=>String(a.company||'').localeCompare(String(b.company||''),'es'));
+ else list.sort((a,b)=>Number(isNew(b))-Number(isNew(a)) || String(b.fetchedAt||b.updatedSource||'').localeCompare(String(a.fetchedAt||a.updatedSource||'')));
+ return list;
+}
+function renderJobs(reset=true){
+ if(reset) visibleCount=PAGE_SIZE;
+ const filtered=filteredJobs();
+ const visible=filtered.slice(0,visibleCount);
+ jobsContainer.innerHTML=visible.map(job=>{
+   const fresh=isNew(job);
+   return `<article class="job${fresh?' new-job':''}">
+  <div class="job-top"><div class="badge-group"><span class="source">${escapeHtml(job.source||'Portal de empleo')}</span><span class="badge">${escapeHtml(job.category||'Oportunidad laboral')}</span>${fresh?'<span class="new-badge">NUEVA</span>':''}</div></div>
+  <h3>${escapeHtml(job.title)}</h3><div class="company">${escapeHtml(job.company||'Empresa por confirmar')}</div>
+  <div class="meta"><span>📍 ${escapeHtml(job.location||'Perú')}</span><span>${getJobMode(job)==='remoto'?'🏠 ':getJobMode(job)==='híbrido'?'🔄 ':getJobMode(job)==='presencial'?'🏢 ':''}${escapeHtml(getJobMode(job)||'Modalidad no especificada')}</span>${job.salary?`<span>💰 ${escapeHtml(job.salary)}</span>`:''}</div>
+  <p>${formatJobDescription(job.description||'Revisa los requisitos y condiciones en el anuncio original.')}</p>
+  <div class="job-bottom"><small>${escapeHtml(job.source||'Fuente externa')}</small><a class="apply" href="${escapeHtml(job.url||job.link||'#')}" target="_blank" rel="noopener noreferrer">Ver anuncio ↗</a></div>
+ </article>`;
+ }).join('');
+ empty.style.display=filtered.length?'none':'block';
+ if(!jobs.length) empty.textContent='Todavía no hay ofertas cargadas. Configuraremos la fuente de datos para incorporar más vacantes.';
+ else empty.textContent='No hay ofertas que coincidan. Prueba otra palabra o cambia los filtros.';
+ resultsCount.innerHTML=`<strong>${filtered.length}</strong> oferta${filtered.length===1?'':'s'} encontrada${filtered.length===1?'':'s'}`;
+ pageInfo.textContent=filtered.length?`Mostrando ${Math.min(visibleCount,filtered.length)} de ${filtered.length}`:'Prueba otra búsqueda';
+ loadMoreButton.hidden=visibleCount>=filtered.length;
+}
+async function loadJobs(){
+ const sources=[
+   'jobs.json?v='+Date.now(),
+   './jobs.json?v='+Date.now(),
+   'https://raw.githubusercontent.com/pedroromero791/ofertas-laborales/main/jobs.json?'+Date.now()
+ ];
+ let lastError=null;
+ for(const source of sources){
+  try{
+   const response=await fetch(source,{cache:'no-store'});
+   if(!response.ok) throw new Error('HTTP '+response.status);
+   const data=await response.json();
+   if(Array.isArray(data)) jobs=data;
+   else if(Array.isArray(data.jobs)) jobs=data.jobs;
+   else if(Array.isArray(data.results)) jobs=data.results;
+   else throw new Error('Formato de jobs.json no reconocido');
+
+   jobs=jobs.map(j=>({
+     ...j,
+     title:j.title||j.position||j.name||'Oferta laboral',
+     company:j.company||j.companyName||'Empresa por confirmar',
+     location:j.location||j.city||'Perú',
+     description:j.description||j.snippet||'Revisa los requisitos y condiciones en el anuncio original.',
+     url:j.url||j.link||j.applyUrl||'#',
+     source:j.source||j.sourceName||'Portal de empleo',
+     category:j.category||j.categoria||'Oportunidad laboral',
+     workType:j.workType||j.type||j.jobType||j.employmentType||j.tipo_empleo||j.mode||'',
+     mode:j.modality||j.workMode||j.work_mode||j.modalidad||''
+   }));
+   populateCategories();
+   if(typeof populateEmploymentTypes==='function') populateEmploymentTypes();
+   const date=data.updated?new Date(data.updated+'T12:00:00'):null;
+   document.getElementById('fresh').textContent=date&&!isNaN(date)?'Actualizado · '+date.toLocaleDateString('es-PE',{day:'numeric',month:'short',year:'numeric'}):'Ofertas destacadas';
+   renderJobs();
+   return;
+  }catch(error){ lastError=error; }
+ }
+ jobs=[];
+ document.getElementById('fresh').textContent='No se pudo cargar la base de ofertas';
+ empty.textContent='No se pudo cargar jobs.json. Verifica que el archivo esté publicado junto a index.html.';
+ renderJobs();
+ console.error('No se pudo cargar jobs.json',lastError);
+}
+form.addEventListener('submit',e=>{e.preventDefault();renderJobs();document.getElementById('ofertas').scrollIntoView({behavior:'smooth'});});
+[keyword,companyInput].forEach(el=>el.addEventListener('input',()=>renderJobs()));
+[locationSelect,categorySelect,employmentTypeSelect,modeSelect,sortSelect].forEach(el=>el.addEventListener('change',()=>renderJobs()));
+loadMoreButton.addEventListener('click',()=>{visibleCount+=PAGE_SIZE;renderJobs(false);});
+loadJobs();
+</script>
+
+</body>
+</html>
