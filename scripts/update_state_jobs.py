@@ -225,6 +225,74 @@ def scrape_defensoria(session, results, errors):
         errors.append(f"Defensoría del Pueblo: {exc}")
 
 
+
+def scrape_mpfn(session, results, errors):
+    """Extract hiring calls from the Public Ministry's official table."""
+    base = "https://portal.mpfn.gob.pe/convoca/convocatorias/"
+    try:
+        response = session.get(base, timeout=30)
+        response.raise_for_status()
+        soup = BeautifulSoup(response.text, "html.parser")
+        today = date.today()
+        for row in soup.select("tr"):
+            cells = row.find_all(["td", "th"], recursive=False)
+            if len(cells) < 8:
+                continue
+            context = clean(row.get_text(" ", strip=True))
+            if not re.search(r"\\bvigente\\b", context, re.I):
+                continue
+            title = clean(cells[3].get_text(" ", strip=True))
+            detail = clean(cells[4].get_text(" ", strip=True))
+            published = clean(cells[5].get_text(" ", strip=True))
+            end_text = clean(cells[7].get_text(" ", strip=True))
+            end_match = re.search(r"(\\d{1,2}/\\d{1,2}/\\d{4})", end_text)
+            if end_match:
+                try:
+                    if datetime.strptime(end_match.group(1), "%d/%m/%Y").date() < today:
+                        continue
+                except ValueError:
+                    pass
+            links = row.select("a[href]")
+            url = normalize_url(links[0].get("href"), base) if links else base
+            add_result(results, f"{title} — {detail}", url, "Ministerio Público", "Ministerio Público", context, location=clean(cells[1].get_text(" ", strip=True)) or "Perú", published=published)
+    except Exception as exc:
+        errors.append(f"Ministerio Público: {exc}")
+
+
+def scrape_inpe(session, results, errors):
+    """Extract recent CAS listings from INPE's official convocatorias page."""
+    base = "https://www.inpe.gob.pe/convocatorias"
+    try:
+        response = session.get(base, timeout=30)
+        response.raise_for_status()
+        soup = BeautifulSoup(response.text, "html.parser")
+        for a in soup.select("a[href]"):
+            title = clean(a.get_text(" ", strip=True))
+            card = a
+            for _ in range(4):
+                if card.parent:
+                    card = card.parent
+            context = clean(card.get_text(" ", strip=True))
+            combined = title + " " + context
+            if not re.search(r"convocatoria.*(?:CAS|2026)|(?:CAS|2026).*convocatoria", combined, re.I):
+                continue
+            if not re.search(r"2026", combined, re.I):
+                continue
+            if re.search(r"\\b(cerrado|culminado|concluido|cancelado|desierto|finalizado)\\b", combined, re.I):
+                continue
+            if title.lower() in ("bases", "anexos", "requisitos y cronograma", "descargar"):
+                title_match = re.search(r"(?:CUARTA CONVOCATORIA )?CONVOCATORIA CAS[^.]{0,100}", combined, re.I)
+                if title_match:
+                    title = clean(title_match.group(0))
+            url = normalize_url(a.get("href"), base)
+            if urlparse(url).netloc not in ("inpe.gob.pe", "www.inpe.gob.pe"):
+                continue
+            pub_match = re.search(r"Publicado el (\\d{1,2} [A-Za-záéíóú]+ 2026)", combined, re.I)
+            add_result(results, title, url, "INPE", "Instituto Nacional Penitenciario", context=combined, published=pub_match.group(1) if pub_match else "")
+    except Exception as exc:
+        errors.append(f"INPE: {exc}")
+
+
 def main():
     session = requests.Session()
     session.headers.update(HEADERS)
@@ -236,6 +304,8 @@ def main():
     scrape_apn(session, results, errors)
     scrape_sunat(session, results, errors)
     scrape_defensoria(session, results, errors)
+    scrape_mpfn(session, results, errors)
+    scrape_inpe(session, results, errors)
 
     items = sorted(results.values(), key=lambda item: item.get("published", ""), reverse=True)[:60]
     if not items:
@@ -248,7 +318,7 @@ def main():
             return
     payload = {
         "updated": datetime.now(timezone.utc).astimezone().date().isoformat(),
-        "source": "Gob.pe y portales institucionales oficiales",
+        "source": "Gob.pe y portales institucionales oficiales (Contigo, APN, SUNAT, Defensoría, Ministerio Público e INPE)",
         "count": len(items),
         "convocatorias": items,
     }
