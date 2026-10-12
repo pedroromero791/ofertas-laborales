@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://empleosperu.tech/</loc>
-  </url>
+  <url><loc>https://empleosperu.tech/</loc></url>
+  <url><loc>https://empleosperu.tech/trabajo-remoto/</loc></url>
+  <url><loc>https://empleosperu.tech/empleos-lima/</loc></url>
+  <url><loc>https://empleosperu.tech/atencion-al-cliente/</loc></url>
+  <url><loc>https://empleosperu.tech/empleos-salud/</loc></url>
+  <url><loc>https://empleosperu.tech/empleos-educacion/</loc></url>
+  <url><loc>https://empleosperu.tech/convocatorias-estado/</loc></url>
 </urlset>
