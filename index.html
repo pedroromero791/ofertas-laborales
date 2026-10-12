@@ -326,7 +326,7 @@ function filteredJobs(){
    const category=categoryKey(job.category||'');
    const type=norm(getEmploymentType(job));
    const jobMode=norm(getJobMode(job));
-   return (!q||title.includes(q)||companyText.includes(q)||category.includes(q))
+   return (!q||title.includes(q)||companyText.includes(q)||category.includes(q)||where.includes(q))
      &&(!loc||norm(job.location||'').includes(loc)||(loc==='remoto'&&jobMode.includes('remot')))
      &&(!cat||category===cat)
      &&(!employmentType||type.includes(employmentType)||title.includes(employmentType))
