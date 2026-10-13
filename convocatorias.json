@@ -1,8 +1,17 @@
 {
-  "updated": "2026-10-12",
+  "updated": "2026-10-13",
   "source": "Gob.pe y portales institucionales oficiales (Contigo, APN, SUNAT, Defensoría, Ministerio Público e INPE)",
-  "count": 3,
+  "count": 60,
   "convocatorias": [
+    {
+      "title": "[P.S. 019-2026-MIDIS-PNPDS] – SERVICIOS DE UN (01) ESPECIALISTA EN ADMINISTRACIÓN GENERAL PARA LA UNIDAD DE ADMINISTRACIÓN",
+      "institution": "Programa Contigo",
+      "location": "Lima",
+      "published": "",
+      "url": "https://contigo.gob.pe/jobs/p-s-019-2026-midis-pnpds-servicios-de-un-01-especialista-en-administracion-general-para-la-unidad-de-administracion",
+      "source": "Programa Contigo",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
     {
       "title": "[P.S. 018-2026-MIDIS-PNPDS] – SERVICIOS DE UN (01) GESTOR SOCIAL PARA LA UNIDAD TERRITORIAL DE CAJAMARCA",
       "institution": "Programa Contigo",
@@ -22,12 +31,516 @@
       "status": "Verificar vigencia en la fuente oficial"
     },
     {
-      "title": "2026-016-APN — ASISTENTE EN SOPORTE INFORMATICO 2",
+      "title": "2026-019-APN — ASISTENTE DE LA BIBLIOTECA T&EACUTE;CNICA Y ESPECIALIZADA 1",
       "institution": "Autoridad Portuaria Nacional",
       "location": "Perú",
       "published": "",
       "url": "https://reclutamiento.apn.gob.pe/convocatorias-cas/?modalidad=cas",
       "source": "Autoridad Portuaria Nacional",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°007-2026-INPE/UE – 010 (NECESIDAD TRANSITORIA)",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15640-convocatoria-cas-n°007-2026-inpe-ue-–-010-necesidad-transitoria.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "Descargar ( pdf, 5.01 MB )",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15640-convocatoria-cas-n°007-2026-inpe-ue-–-010-necesidad-transitoria/file.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°007-2026-INPE/UE – 010 (NECESIDAD TRANSITORIA) Nuevo Publicado el 07 Octubre 2026 Modificado el 0",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15635-perfil-de-puesto-y-bases-legales-del-proceso-de-seleccion-n%C2%B0-007-2026.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°007-2026-INPE/UE – 010 (NECESIDAD TRANSITORIA) Nuevo Publicado el 07 Octubre 2026 Modificado el 0",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15634-bases-cas-nro-007-2026-inpe.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°007-2026-INPE/UE – 010 (NECESIDAD TRANSITORIA) Nuevo Publicado el 07 Octubre 2026 Modificado el 0",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15630-anexos-para-inscripcion-nueva-directiva-cas-puno.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°005-2026-INPE/UE – 022 (NECESIDAD TRANSITORIA)",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15639-convocatoria-cas-n°005-2026-inpe-ue-–-022-necesidad-transitoria.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "Descargar ( pdf, 5.01 MB )",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15639-convocatoria-cas-n°005-2026-inpe-ue-–-022-necesidad-transitoria/file.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°005-2026-INPE/UE – 022 (NECESIDAD TRANSITORIA) Nuevo Publicado el 07 Octubre 2026 En Convocatoria",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15637-perfil-y-cronograma-cas-05-1.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°005-2026-INPE/UE – 022 (NECESIDAD TRANSITORIA) Nuevo Publicado el 07 Octubre 2026 En Convocatoria",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15633-bases-cas-n%C2%B005-1.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°005-2026-INPE/UE – 022 (NECESIDAD TRANSITORIA) Nuevo Publicado el 07 Octubre 2026 En Convocatoria",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15631-anexos-para-inscripcion-nueva-directiva-cas-3-2.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°004-2026-INPE/UE – 022 (NECESIDAD TRANSITORIA)",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15638-convocatoria-cas-n°004-2026-inpe-ue-–-022-necesidad-transitoria.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "Descargar ( pdf, 5.01 MB )",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15638-convocatoria-cas-n°004-2026-inpe-ue-–-022-necesidad-transitoria/file.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°004-2026-INPE/UE – 022 (NECESIDAD TRANSITORIA) Nuevo Publicado el 07 Octubre 2026 En Convocatoria",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15636-perfil-y-cronograma-cas-04.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°004-2026-INPE/UE – 022 (NECESIDAD TRANSITORIA) Nuevo Publicado el 07 Octubre 2026 En Convocatoria",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15632-bases-cas-n%C2%B004-1.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°122-2026-INPE/UE – 001 (NECESIDAD TRANSITORIA)",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15627-convocatoria-cas-n°122-2026-inpe-ue-–-001-necesidad-transitoria.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "Descargar ( pdf, 5.01 MB )",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15627-convocatoria-cas-n°122-2026-inpe-ue-–-001-necesidad-transitoria/file.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°122-2026-INPE/UE – 001 (NECESIDAD TRANSITORIA) Nuevo Publicado el 06 Octubre 2026 En Convocatoria",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15623-perfil-cas-122-2026.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°122-2026-INPE/UE – 001 (NECESIDAD TRANSITORIA) Nuevo Publicado el 06 Octubre 2026 En Convocatoria",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15619-bases-cas-122-2026-f.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°122-2026-INPE/UE – 001 (NECESIDAD TRANSITORIA) Nuevo Publicado el 06 Octubre 2026 En Convocatoria",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/14957-anexos-para-inscripcion-nueva-directiva-cas-11-1.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°121-2026-INPE/UE – 001 (NECESIDAD TRANSITORIA)",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15626-convocatoria-cas-n°121-2026-inpe-ue-–-001-necesidad-transitoria.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "Descargar ( pdf, 5.01 MB )",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15626-convocatoria-cas-n°121-2026-inpe-ue-–-001-necesidad-transitoria/file.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°121-2026-INPE/UE – 001 (NECESIDAD TRANSITORIA) Nuevo Publicado el 06 Octubre 2026 En Convocatoria",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15622-perfil-cas-121-2026.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°121-2026-INPE/UE – 001 (NECESIDAD TRANSITORIA) Nuevo Publicado el 06 Octubre 2026 En Convocatoria",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15618-bases-cas-121-2026-f.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°120-2026-INPE/UE – 001 (NECESIDAD TRANSITORIA)",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15625-convocatoria-cas-n°120-2026-inpe-ue-–-001-necesidad-transitoria.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "Descargar ( pdf, 5.01 MB )",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15625-convocatoria-cas-n°120-2026-inpe-ue-–-001-necesidad-transitoria/file.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°120-2026-INPE/UE – 001 (NECESIDAD TRANSITORIA) Nuevo Publicado el 06 Octubre 2026 En Convocatoria",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15621-perfil-cas-120-2026.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°120-2026-INPE/UE – 001 (NECESIDAD TRANSITORIA) Nuevo Publicado el 06 Octubre 2026 En Convocatoria",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15617-bases-cas-120-2026-f.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°119-2026-INPE/UE – 001 (NECESIDAD TRANSITORIA)",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15624-convocatoria-cas-n°119-2026-inpe-ue-–-001-necesidad-transitoria.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "Descargar ( pdf, 5.01 MB )",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15624-convocatoria-cas-n°119-2026-inpe-ue-–-001-necesidad-transitoria/file.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°119-2026-INPE/UE – 001 (NECESIDAD TRANSITORIA) Nuevo Publicado el 06 Octubre 2026 En Convocatoria",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15620-perfil-cas-119-2026.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°119-2026-INPE/UE – 001 (NECESIDAD TRANSITORIA) Nuevo Publicado el 06 Octubre 2026 En Convocatoria",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15616-bases-cas-119-2026-f.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS Nº 118-2026-INPE/UE-001 - SUPLENCIA",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15615-convocatoria-cas-nº-118-2026-inpe-ue-001-suplencia.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "Descargar ( pdf, 2.20 MB )",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15615-convocatoria-cas-nº-118-2026-inpe-ue-001-suplencia/file.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS Nº 118-2026-INPE/UE-001 - SUPLENCIA Nuevo Publicado el 06 Octubre 2026 En Convocatoria CAS 19 desca",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15609-requisitos-y-cronograma-cas-118-2026.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS Nº 118-2026-INPE/UE-001 - SUPLENCIA Nuevo Publicado el 06 Octubre 2026 En Convocatoria CAS 19 desca",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15610-bases-cas-118-2026-suplencia-f.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS Nº 118-2026-INPE/UE-001 - SUPLENCIA Nuevo Publicado el 06 Octubre 2026 En Convocatoria CAS 19 desca",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15536-anexos-para-inscripcion-nueva-directiva-cas-18.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS Nº 117-2026-INPE/UE-001 - SUPLENCIA",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15614-convocatoria-cas-nº-117-2026-inpe-ue-001-suplencia.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "Descargar ( pdf, 2.20 MB )",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15614-convocatoria-cas-nº-117-2026-inpe-ue-001-suplencia/file.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS Nº 117-2026-INPE/UE-001 - SUPLENCIA Nuevo Publicado el 06 Octubre 2026 Modificado el 06 Octubre 202",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15608-requisitos-y-cronograma-cas-117-2026.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS Nº 117-2026-INPE/UE-001 - SUPLENCIA Nuevo Publicado el 06 Octubre 2026 Modificado el 06 Octubre 202",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15611-bases-cas-117-2026-suplencia-f.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS Nº 116-2026-INPE/UE-001 - SUPLENCIA",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15613-convocatoria-cas-nº-116-2026-inpe-ue-001-suplencia.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "Descargar ( pdf, 2.20 MB )",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15613-convocatoria-cas-nº-116-2026-inpe-ue-001-suplencia/file.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS Nº 116-2026-INPE/UE-001 - SUPLENCIA Nuevo Publicado el 06 Octubre 2026 En Convocatoria CAS 49 desca",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15607-requisitos-y-cronograma-cas-116-2026.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS Nº 116-2026-INPE/UE-001 - SUPLENCIA Nuevo Publicado el 06 Octubre 2026 En Convocatoria CAS 49 desca",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15612-bases-cas-116-2026-suplencia-f.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "SEGUNDA CONVOCATORIA CAS N°085-2026-INPE/UE – 001 (NECESIDAD TRANSITORIA)",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15592-segunda-convocatoria-cas-n°085-2026-inpe-ue-–-001-necesidad-transitoria.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "Descargar ( pdf, 5.01 MB )",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15592-segunda-convocatoria-cas-n°085-2026-inpe-ue-–-001-necesidad-transitoria/file.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°085-2026-INPE/UE – 001 (NECESIDAD TRANSITORIA) Publicado el 02 Octubre 2026 En Convocatoria CAS 6",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15591-perfil-y-cronograma-cas-85-enfermero-e-p-moquegua-2c.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°085-2026-INPE/UE – 001 (NECESIDAD TRANSITORIA) Publicado el 02 Octubre 2026 En Convocatoria CAS 6",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15590-bases-de-la-2da-cas-085-2026-inpe-fin.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "TERCERA CONVOCATORIA CAS N°063-2026-INPE/UE – 001 (NECESIDAD TRANSITORIA)",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15589-tercera-convocatoria-cas-n°063-2026-inpe-ue-–-001-necesidad-transitoria.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "Descargar ( pdf, 5.01 MB )",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15589-tercera-convocatoria-cas-n°063-2026-inpe-ue-–-001-necesidad-transitoria/file.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°063-2026-INPE/UE – 001 (NECESIDAD TRANSITORIA) Publicado el 02 Octubre 2026 Modificado el 02 Octu",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15588-perfil-y-cronograma-cas-63-tecnico-en-farmacia-3c.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°063-2026-INPE/UE – 001 (NECESIDAD TRANSITORIA) Publicado el 02 Octubre 2026 Modificado el 02 Octu",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15587-bases-de-la-3ra-convocatoria-cas-063-2026fin.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "TERCERA CONVOCATORIA CAS N°061-2026-INPE/UE – 001 (NECESIDAD TRANSITORIA)",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15586-tercera-convocatoria-cas-n°033-2026-inpe-ue-–-001-necesidad-transitoria.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "Descargar ( pdf, 5.01 MB )",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/convocatorias/15586-tercera-convocatoria-cas-n°033-2026-inpe-ue-–-001-necesidad-transitoria/file.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°061-2026-INPE/UE – 001 (NECESIDAD TRANSITORIA) Publicado el 02 Octubre 2026 Modificado el 02 Octu",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15585-perfil-y-cronograma-cas-61-tecnico-en-laboratorio-3c.html",
+      "source": "INPE",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "CONVOCATORIA CAS N°061-2026-INPE/UE – 001 (NECESIDAD TRANSITORIA) Publicado el 02 Octubre 2026 Modificado el 02 Octu",
+      "institution": "Instituto Nacional Penitenciario",
+      "location": "Perú",
+      "published": "",
+      "url": "https://www.inpe.gob.pe/normatividad/documentos/15584-bases-de-la-3era-convocatoria-cas-061-2026fin.html",
+      "source": "INPE",
       "status": "Verificar vigencia en la fuente oficial"
     }
   ]
