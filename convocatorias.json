@@ -1,8 +1,53 @@
 {
-  "updated": "2026-10-22",
+  "updated": "2026-10-23",
   "source": "Gob.pe y portales institucionales oficiales (Contigo, APN, SUNAT, Defensoría, Ministerio Público e INPE)",
-  "count": 1,
+  "count": 6,
   "convocatorias": [
+    {
+      "title": "[P.S. 021-2026-MIDIS-PNPDS] – SERVICIOS DE UN (01) ANALISTA LEGAL PARA LA UNIDAD DE ASESORÍA JURÍDICA",
+      "institution": "Programa Contigo",
+      "location": "Lima",
+      "published": "",
+      "url": "https://contigo.gob.pe/jobs/p-s-021-2026-midis-pnpds-servicios-de-un-01-analista-legal-para-la-unidad-de-asesoria-juridica",
+      "source": "Programa Contigo",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "[P.S. 020-2026-MIDIS-PNPDS] –SERVICIOS DE UN (01) ESPECIALISTA LEGAL II PARA LA UNIDAD DE ASESORÍA JURÍDICA",
+      "institution": "Programa Contigo",
+      "location": "Lima",
+      "published": "",
+      "url": "https://contigo.gob.pe/jobs/p-s-020-2026-midis-pnpds-servicios-de-un-01-especialista-legal-ii-para-la-unidad-de-asesoria-juridica",
+      "source": "Programa Contigo",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "[P.S. 019-2026-MIDIS-PNPDS] – SERVICIOS DE UN (01) ESPECIALISTA EN ADMINISTRACIÓN GENERAL PARA LA UNIDAD DE ADMINISTRACIÓN",
+      "institution": "Programa Contigo",
+      "location": "Lima",
+      "published": "",
+      "url": "https://contigo.gob.pe/jobs/p-s-019-2026-midis-pnpds-servicios-de-un-01-especialista-en-administracion-general-para-la-unidad-de-administracion",
+      "source": "Programa Contigo",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "[P.S. 018-2026-MIDIS-PNPDS] – SERVICIOS DE UN (01) GESTOR SOCIAL PARA LA UNIDAD TERRITORIAL DE CAJAMARCA",
+      "institution": "Programa Contigo",
+      "location": "CAJAMARCA",
+      "published": "",
+      "url": "https://contigo.gob.pe/jobs/p-s-018-2026-midis-pnpds-servicios-de-un-01-gestor-social-para-la-unidad-territorial-de-cajamarca",
+      "source": "Programa Contigo",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
+    {
+      "title": "[P.S. 017-2026-MIDIS-PNPDS] – SERVICIOS DE UN (01) ASISTENTE ADMINISTRATIVO PARA LA UNIDAD DE PLANEAMIENTO PRESUPUESTO Y MODERNIZACIÓN",
+      "institution": "Programa Contigo",
+      "location": "Lima",
+      "published": "",
+      "url": "https://contigo.gob.pe/jobs/p-s-017-2026-midis-pnpds",
+      "source": "Programa Contigo",
+      "status": "Verificar vigencia en la fuente oficial"
+    },
     {
       "title": "2026-019-APN — ASISTENTE DE LA BIBLIOTECA T&EACUTE;CNICA Y ESPECIALIZADA 1",
       "institution": "Autoridad Portuaria Nacional",
