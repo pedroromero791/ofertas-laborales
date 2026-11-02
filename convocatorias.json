@@ -1,7 +1,7 @@
 {
-  "updated": "2026-11-01",
+  "updated": "2026-11-02",
   "source": "Gob.pe y portales institucionales oficiales (Contigo, APN, SUNAT, Defensoría, Ministerio Público e INPE)",
-  "count": 5,
+  "count": 4,
   "convocatorias": [
     {
       "title": "[P.S. 022-2026-MIDIS-PNPDS] – SERVICIOS DE UN (01) ASISTENTE DE GESTIÓN DOCUMENTAL PARA LA UNIDAD DE ADMINISTRACIÓN",
@@ -37,15 +37,6 @@
       "published": "",
       "url": "https://contigo.gob.pe/jobs/p-s-018-2026-midis-pnpds-servicios-de-un-01-gestor-social-para-la-unidad-territorial-de-cajamarca",
       "source": "Programa Contigo",
-      "status": "Verificar vigencia en la fuente oficial"
-    },
-    {
-      "title": "2026-019-APN — ASISTENTE DE LA BIBLIOTECA T&EACUTE;CNICA Y ESPECIALIZADA 1",
-      "institution": "Autoridad Portuaria Nacional",
-      "location": "Perú",
-      "published": "",
-      "url": "https://reclutamiento.apn.gob.pe/convocatorias-cas/?modalidad=cas",
-      "source": "Autoridad Portuaria Nacional",
       "status": "Verificar vigencia en la fuente oficial"
     }
   ]
